@@ -2,75 +2,75 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RailGun : MonoBehaviour
+public class HelixCannon : MonoBehaviour
 {
-    [SerializeField] GameObject projectile;
+    // Start is called before the first frame update
+    [SerializeField] GameObject projectile1;
+    [SerializeField] GameObject projectile2;
     [SerializeField] GameObject Weapon;
     GameObject player;
-    Rigidbody projBody;
-    Rigidbody playerBod;
+    GameObject proj1;
+    GameObject proj2;
     Coroutine auto;
+    bool flip;
     private PlayerControls playerControls;
-    float timeSince;
-    float startTime;
-
     void Start()
     {
         player = GameObject.Find("Player");
-        playerBod = player.GetComponent<Rigidbody>();
+        //playerBod = player.GetComponent<Rigidbody>();
         //projBody = projectile.GetComponent<Rigidbody>();
-        player = GameObject.Find("Player");
     }
 
     private void Awake()
     {
         playerControls = new PlayerControls();
-        //playerControls.Controls.Shoot. += _ => volley();
+        playerControls.Controls.Shoot.started += _ => volley();
         playerControls.Controls.Shoot.canceled += _ => cease();
     }
 
     void Update()
     {
-        
+        player = GameObject.Find("Player");
     }
 
     void volley()
     {
-        //auto = StartCoroutine(AutoFire());
-
+        auto = StartCoroutine(AutoFire());
     }
 
     void cease()
     {
-        //print("Yup");
+        print("Yup");
         StopCoroutine(auto);
     }
 
     public void shoot()
     {
-        /*
         Vector3 move = new Vector3(player.transform.forward.x, 0, player.transform.forward.z);
-        GameObject proj = Instantiate(projectile, player.transform);
-        proj.transform.SetParent(null, true);
+
+        proj1 = Instantiate(projectile1, player.transform);
+        proj2 = Instantiate(projectile2, player.transform);
+        proj1.transform.SetParent(null, true);
+        proj2.transform.SetParent(null, true);
         Quaternion temp = player.transform.rotation;
         temp.x = 0;
         temp.z = 0;
-        proj.transform.rotation = temp;
-        proj.transform.position = move;
-        Destroy(proj, 5);
-        */
+        proj1.transform.rotation = temp;
+        proj1.transform.position = move;
+        proj2.transform.rotation = temp;
+        proj2.transform.position = move;
+        Destroy(proj1, 5);
+        Destroy(proj2, 5);
     }
 
-    /*
     public IEnumerator AutoFire()
     {
         while (true)
         {
             shoot();
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(0.10f);
         }
     }
-    */
 
     private void OnEnable()
     {
