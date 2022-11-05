@@ -8,11 +8,9 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     // Start is called before the first frame update
-    GameObject cam;
-    Rigidbody rig;
     private PlayerControls playerControls;
-    
 
+    Rigidbody rig;
 
     private void Awake()
     {
@@ -36,10 +34,9 @@ public class PlayerMovement : MonoBehaviour
         Vector2 movement = playerControls.Controls.Movement.ReadValue<Vector2>();
         Vector2 rotation = playerControls.Controls.Direction.ReadValue<Vector2>();
         Vector3 move = new Vector3(movement.x, 0, movement.y);
-        // gameObject.transform.position += move * 5 * Time.deltaTime;
-        rig.AddForce(move);
-        float angle = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(new Vector3(0, -angle, 0));
+        gameObject.transform.position += move * 5 * Time.deltaTime;
+        float angle = Mathf.Atan2(rotation.x, rotation.y) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(new Vector3(90, angle, 0));
         /*
         if (Input.GetKey(KeyCode.D))
         {
