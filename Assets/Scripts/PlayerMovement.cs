@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerControls playerControls;
 
     Rigidbody rig;
+    [SerializeField] bool stickRotation;
 
     private void Awake()
     {
@@ -31,49 +32,42 @@ public class PlayerMovement : MonoBehaviour
 
     void Movement()
     {
+        if (playerControls.Controls.Direction.IsPressed())
+        {
+            stickRotation = true;
+        }
+        else if(!playerControls.Controls.Direction.IsPressed())
+        {
+            stickRotation = false;
+        }
+        
+
         Vector2 movement = playerControls.Controls.Movement.ReadValue<Vector2>();
-        Vector2 rotation = playerControls.Controls.Direction.ReadValue<Vector2>();
         Vector3 move = new Vector3(movement.x, 0, movement.y);
-        gameObject.transform.position += move * 5 * Time.deltaTime;
-        float angle = Mathf.Atan2(rotation.x, rotation.y) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(new Vector3(90, angle, 0));
-        /*
-        if (Input.GetKey(KeyCode.D))
-        {
-            Vector3 temp = transform.right;
-            temp.y = 0;
-            gameObject.transform.position += temp * 5 * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            Vector3 temp = transform.forward;
-            temp.y = 0;
-            gameObject.transform.position += temp * 5 * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            Vector3 temp = transform.right;
-            temp.y = 0;
-            gameObject.transform.position += -temp * 5 * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            Vector3 temp = transform.forward;
-            temp.y = 0;
-            gameObject.transform.position += -temp * 5 * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            transform.Rotate(-Vector3.up *50 * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
+        //gameObject.transform.position += move * 5 * Time.deltaTime;
+        rig.velocity += move *3;
 
-            transform.Rotate(Vector3.up * 50 * Time.deltaTime);
-            cam.transform.rotation = transform.rotation;
-        }*/
+        if (!stickRotation && playerControls.Controls.Movement.IsInProgress())
+        {
+            Vector2 rotation = playerControls.Controls.Movement.ReadValue<Vector2>();
+            float angle = Mathf.Atan2(rotation.x, rotation.y) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(new Vector3(90, angle, 0));
+        }
+        else if(stickRotation && playerControls.Controls.Direction.IsInProgress())
+        {
+            //stickRotation = true;
+            Vector2 rotation = playerControls.Controls.Direction.ReadValue<Vector2>();
+            float angle = Mathf.Atan2(rotation.x, rotation.y) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(new Vector3(90, angle, 0));
+        }
 
 
+        
+    }
+
+    void Rotation() 
+    {
+        
     }
 
     private void OnEnable()

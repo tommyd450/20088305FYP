@@ -22,6 +22,6 @@ public class RailProj : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(this);
+        Destroy(this,5);
     }
 }
