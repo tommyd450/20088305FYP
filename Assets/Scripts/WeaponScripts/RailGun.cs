@@ -8,26 +8,27 @@ public class RailGun : MonoBehaviour
     [SerializeField] GameObject Weapon;
     [SerializeField] GameObject chargeParticle;
     [SerializeField] GameObject chargeDispersal;
-    GameObject tempPart;
-    GameObject player;
+    [SerializeField] GameObject tempPart;
+    [SerializeField] GameObject player;
     Rigidbody playerBod;
-    Coroutine auto;
     private PlayerControls playerControls;
     float timeSince;
     float startTime;
     float cooldownStart;
     bool chargeComplete = false;
+    RailProj rail;
     void Start()
     {
         player = GameObject.Find("Player");
         playerBod = player.GetComponent<Rigidbody>();
+        rail = new RailProj();
     }
 
     private void Awake()
     {
         playerControls = new PlayerControls();
-        playerControls.Controls.Shoot.started += _ => volley();
-        playerControls.Controls.Shoot.canceled += _ => cease();
+        playerControls.Controls.Shoot.started += _ => charge();
+        playerControls.Controls.Shoot.canceled += _ => release();
     }
 
     void Update()
@@ -35,7 +36,7 @@ public class RailGun : MonoBehaviour
         
     }
 
-    void volley()
+    void charge()
     {
         startTime = Time.time;
         print(Time.time - cooldownStart);
@@ -48,52 +49,44 @@ public class RailGun : MonoBehaviour
         }
     }
 
-    void cease()
+    void release()
     {
-        if (Time.time - cooldownStart > 3 && chargeComplete==false)
+        if (Time.time - cooldownStart > 3 && chargeComplete==false) // Ensures that the Cooldown of 3 seconds has been met.
         {
             chargeComplete = true;
-            timeSince = Time.time - startTime;
+            timeSince = Time.time - startTime; // Calculates Time since the charge was started 
             //print("Time Passed : "+timeSince);
 
-            Destroy(tempPart);
-            GameObject disperse = Instantiate(chargeDispersal);
-            disperse.transform.parent = player.transform;
+            Destroy(tempPart); // Destroys the particle effect from the charge sequence
+            GameObject disperse = Instantiate(chargeDispersal); // Creates the dispersal effect to denote the charge up is done and the projectile is spwaned
+
+            disperse.transform.parent = player.transform; //Sets positions to that of the player
             disperse.transform.position = player.transform.position;
             Destroy(disperse, 2);
 
-            Vector3 dir = new Vector3(player.transform.forward.x * 1000f, 0, player.transform.forward.z * 1000f).normalized;
+
+            // This section is responsible for the players knockback recieved from using the railgun 
+            //Vector3 dir = new Vector3(player.transform.forward.x * 1000f, 0, player.transform.forward.z * 1000f).normalized;
             playerBod.velocity = new Vector3(0, 0, 0);
             playerBod.AddRelativeForce((playerBod.gameObject.transform.forward * 100f) * timeSince, ForceMode.Impulse);
             cooldownStart = Time.time;
+
+
+
+            Vector3 move = new Vector3(player.transform.forward.x, 0, player.transform.forward.z).normalized;
+            GameObject proj = Instantiate(projectile, player.transform);
+            proj.transform.SetParent(null, true);
+            Quaternion temp = player.transform.rotation;
+            temp.x = 0;
+            temp.z = 0;
+            proj.transform.rotation = temp;
+            proj.transform.position = move;
+            proj.GetComponent<RailProj>().chargeMult = timeSince;
+            Destroy(proj, 5);
+            
         }
     }
 
-    public void shoot()
-    {
-        /*
-        Vector3 move = new Vector3(player.transform.forward.x, 0, player.transform.forward.z);
-        GameObject proj = Instantiate(projectile, player.transform);
-        proj.transform.SetParent(null, true);
-        Quaternion temp = player.transform.rotation;
-        temp.x = 0;
-        temp.z = 0;
-        proj.transform.rotation = temp;
-        proj.transform.position = move;
-        Destroy(proj, 5);
-        */
-    }
-
-    /*
-    public IEnumerator AutoFire()
-    {
-        while (true)
-        {
-            shoot();
-            yield return new WaitForSeconds(5);
-        }
-    }
-    */
 
     private void OnEnable()
     {

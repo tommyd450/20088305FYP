@@ -53,6 +53,33 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrimaryShoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""e512b07b-cacc-4283-8ef7-dc3cd6ada8c0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SecondaryShoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""b45fe2c2-eee3-4843-a191-7e4fd53851d2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwapWep"",
+                    ""type"": ""Button"",
+                    ""id"": ""f8c4e162-f9f9-414e-8892-67211e1dd998"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -165,6 +192,50 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3d14b96f-ff6e-46ff-9c42-bce0f817c3b5"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""PrimaryShoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9397910e-503e-429e-803e-604eda98eccb"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""PrimaryShoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d9b8d2d-2ba3-404b-ba3d-12cce66b44a6"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""SecondaryShoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""428d9dc7-4685-47f1-9582-455af966d30f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""SwapWep"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -215,6 +286,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Controls_Movement = m_Controls.FindAction("Movement", throwIfNotFound: true);
         m_Controls_Direction = m_Controls.FindAction("Direction", throwIfNotFound: true);
         m_Controls_Shoot = m_Controls.FindAction("Shoot", throwIfNotFound: true);
+        m_Controls_PrimaryShoot = m_Controls.FindAction("PrimaryShoot", throwIfNotFound: true);
+        m_Controls_SecondaryShoot = m_Controls.FindAction("SecondaryShoot", throwIfNotFound: true);
+        m_Controls_SwapWep = m_Controls.FindAction("SwapWep", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -277,6 +351,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_Movement;
     private readonly InputAction m_Controls_Direction;
     private readonly InputAction m_Controls_Shoot;
+    private readonly InputAction m_Controls_PrimaryShoot;
+    private readonly InputAction m_Controls_SecondaryShoot;
+    private readonly InputAction m_Controls_SwapWep;
     public struct ControlsActions
     {
         private @PlayerControls m_Wrapper;
@@ -284,6 +361,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Controls_Movement;
         public InputAction @Direction => m_Wrapper.m_Controls_Direction;
         public InputAction @Shoot => m_Wrapper.m_Controls_Shoot;
+        public InputAction @PrimaryShoot => m_Wrapper.m_Controls_PrimaryShoot;
+        public InputAction @SecondaryShoot => m_Wrapper.m_Controls_SecondaryShoot;
+        public InputAction @SwapWep => m_Wrapper.m_Controls_SwapWep;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -302,6 +382,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_ControlsActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_ControlsActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_ControlsActionsCallbackInterface.OnShoot;
+                @PrimaryShoot.started -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPrimaryShoot;
+                @PrimaryShoot.performed -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPrimaryShoot;
+                @PrimaryShoot.canceled -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPrimaryShoot;
+                @SecondaryShoot.started -= m_Wrapper.m_ControlsActionsCallbackInterface.OnSecondaryShoot;
+                @SecondaryShoot.performed -= m_Wrapper.m_ControlsActionsCallbackInterface.OnSecondaryShoot;
+                @SecondaryShoot.canceled -= m_Wrapper.m_ControlsActionsCallbackInterface.OnSecondaryShoot;
+                @SwapWep.started -= m_Wrapper.m_ControlsActionsCallbackInterface.OnSwapWep;
+                @SwapWep.performed -= m_Wrapper.m_ControlsActionsCallbackInterface.OnSwapWep;
+                @SwapWep.canceled -= m_Wrapper.m_ControlsActionsCallbackInterface.OnSwapWep;
             }
             m_Wrapper.m_ControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -315,6 +404,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @PrimaryShoot.started += instance.OnPrimaryShoot;
+                @PrimaryShoot.performed += instance.OnPrimaryShoot;
+                @PrimaryShoot.canceled += instance.OnPrimaryShoot;
+                @SecondaryShoot.started += instance.OnSecondaryShoot;
+                @SecondaryShoot.performed += instance.OnSecondaryShoot;
+                @SecondaryShoot.canceled += instance.OnSecondaryShoot;
+                @SwapWep.started += instance.OnSwapWep;
+                @SwapWep.performed += instance.OnSwapWep;
+                @SwapWep.canceled += instance.OnSwapWep;
             }
         }
     }
@@ -351,5 +449,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnDirection(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnPrimaryShoot(InputAction.CallbackContext context);
+        void OnSecondaryShoot(InputAction.CallbackContext context);
+        void OnSwapWep(InputAction.CallbackContext context);
     }
 }

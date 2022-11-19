@@ -19,10 +19,7 @@ public class ProjBullet : MonoBehaviour
         rig.AddForce(dir*100,ForceMode.Impulse);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //gameObject.transform.position = gameObject.transform.position + transform.forward;
-    }
+    
+    
 
 }

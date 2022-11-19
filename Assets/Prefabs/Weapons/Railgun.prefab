@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc4c4335bc6a9f4a85720226f78e38f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
+  projectile: {fileID: 289867689156449768, guid: 029f854ee1929da45a31c3fc76324b0f, type: 3}
   Weapon: {fileID: 0}
   chargeParticle: {fileID: 6119723395330773443, guid: a28d53c674fa4b14bb8061a2b41eacec, type: 3}
   chargeDispersal: {fileID: 845580893638812069, guid: 194bb7da24051b64ca814a6990cf515e, type: 3}
