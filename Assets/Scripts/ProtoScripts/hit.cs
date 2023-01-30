@@ -5,7 +5,7 @@ using UnityEngine;
 public class hit : MonoBehaviour
 {
     // Start is called before the first frame update
-    float hp = 100f;
+    float hp = 20f;
     BoxCollider col;
 
 
