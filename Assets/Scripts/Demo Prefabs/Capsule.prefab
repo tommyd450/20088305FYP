@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4792694443509475391}
   - component: {fileID: 3760560268953583925}
   - component: {fileID: 7879956045047331442}
-  - component: {fileID: 8278715866034181683}
   - component: {fileID: 1450556569756675632}
-  - component: {fileID: -498838757748366064}
+  - component: {fileID: 8117772042430225345}
+  - component: {fileID: 2596935115649521752}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -98,31 +98,18 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 20
-  m_Acceleration: 10
+  m_Speed: 100
+  m_Acceleration: 100
   avoidancePriority: 46
   m_AngularSpeed: 200
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 0
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8278715866034181683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8339056735698035640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e18e74005b8e440873973075903aa6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  proj: {fileID: 3989731531348086678, guid: 504a4ed5d61b9f64f8db47266682d525, type: 3}
 --- !u!135 &1450556569756675632
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -136,7 +123,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.7637596
   m_Center: {x: 0, y: 0, z: 0.42752838}
---- !u!114 &-498838757748366064
+--- !u!114 &8117772042430225345
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,9 +132,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 8339056735698035640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba977abfc8763f94593949d47ea7f435, type: 3}
+  m_Script: {fileID: 11500000, guid: 031411232e7d098488f58b096d00a2c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionName: Action
+  cost: 1
+  target: {fileID: 0}
+  targetTag: 
+  duration: 0
+  preConditions: []
+  afterEffects:
+  - key: moveF
+    value: 1
+  agent: {fileID: 7879956045047331442}
+  running: 0
+--- !u!114 &2596935115649521752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8339056735698035640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76a96f22a3457664a993f25be64de199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions: []
+  currentAction: {fileID: 0}
 --- !u!1001 &4211638319995329818
 PrefabInstance:
   m_ObjectHideFlags: 0
