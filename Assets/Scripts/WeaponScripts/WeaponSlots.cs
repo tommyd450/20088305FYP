@@ -10,6 +10,7 @@ public class WeaponSlots : MonoBehaviour
     private PlayerControls playerControls;
     WeaponMG mg;
     WeaponRail rl;
+    BoxCollider bx;
 
     
     void Start()
@@ -19,6 +20,7 @@ public class WeaponSlots : MonoBehaviour
         slot1 = mg;
         slot2 = rl;
         activeWeapon = slot1;
+        bx = GetComponent<BoxCollider>();
     }
 
     private void Awake()
@@ -29,6 +31,7 @@ public class WeaponSlots : MonoBehaviour
         playerControls.Controls.SwapWep.canceled += _ => stopped();
         playerControls.Controls.Shoot.started += _ => start();  
         playerControls.Controls.Shoot.canceled += _ => end();
+        playerControls.Controls.PickUp.started += _ => PickUpWeapon();
         
     }
 
@@ -69,6 +72,23 @@ public class WeaponSlots : MonoBehaviour
     }
 
 
+    public void PickUpWeapon() 
+    {
+        if (bx.bounds.Contains(GameObject.Find("HelixPickUp").transform.position))
+        {
+            Weapon prev = activeWeapon;
+            activeWeapon = GetComponent<WeaponHelix>();
+            if (slot1 == prev)
+            {
+                slot1 = activeWeapon;
+            }
+            else if (slot2 == prev) 
+            {
+                slot2 = activeWeapon;
+            }
+        }
+    }
+
     private void OnEnable()
     {
         playerControls.Enable();
@@ -80,4 +100,6 @@ public class WeaponSlots : MonoBehaviour
         //playerControls.Controls.Shoot.performed -= ctx => shoot();
         playerControls.Disable();
     }
+
+
 }

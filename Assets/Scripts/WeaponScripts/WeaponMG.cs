@@ -13,12 +13,7 @@ public class WeaponMG : Weapon
     {
         player = GameObject.Find("Player");
     }
-    public override void Awake()
-    {
-        //playerControls = new PlayerControls();
-        //playerControls.Controls.Shoot.started += _ => attackInitiated();
-        //playerControls.Controls.Shoot.canceled += _ => attackReleased();
-    }
+   
     
 
     public override void attackInitiated()

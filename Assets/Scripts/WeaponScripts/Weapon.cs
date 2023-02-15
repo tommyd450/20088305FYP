@@ -7,17 +7,7 @@ public abstract class Weapon : MonoBehaviour
 
     private PlayerControls playerControls;
 
-
-
-
-    public abstract void Awake();
-
-    public void Update()
-    {
-        
-    }
-
-
+    
 
     public abstract void attackInitiated();
     public abstract void attackReleased();

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HelixCannon : MonoBehaviour
+public class WeaponHelix : Weapon
 {
-    // Start is called before the first frame update
+
     [SerializeField] GameObject projectile1;
     [SerializeField] GameObject projectile2;
     [SerializeField] GameObject Weapon;
@@ -12,8 +12,6 @@ public class HelixCannon : MonoBehaviour
     GameObject proj1;
     GameObject proj2;
     Coroutine auto;
-    bool flip;
-    private PlayerControls playerControls;
     void Start()
     {
         player = GameObject.Find("Player");
@@ -21,26 +19,10 @@ public class HelixCannon : MonoBehaviour
         //projBody = projectile.GetComponent<Rigidbody>();
     }
 
-    private void Awake()
-    {
-        playerControls = new PlayerControls();
-        playerControls.Controls.Shoot.started += _ => volley();
-        playerControls.Controls.Shoot.canceled += _ => cease();
-    }
 
     void Update()
     {
         player = GameObject.Find("Player");
-    }
-
-    void volley()
-    {
-        auto = StartCoroutine(AutoFire());
-    }
-
-    void cease()
-    {
-        StopCoroutine(auto);
     }
 
     public void shoot()
@@ -70,16 +52,16 @@ public class HelixCannon : MonoBehaviour
             yield return new WaitForSeconds(0.10f);
         }
     }
-
-    private void OnEnable()
+    // Start is called before the first frame update
+    public override void attackInitiated()
     {
-        playerControls.Enable();
+        auto = StartCoroutine(AutoFire());
 
     }
 
-    private void OnDisable()
+    // Update is called once per frame
+    public override void attackReleased()
     {
-        //playerControls.Controls.Shoot.performed -= ctx => shoot();
-        playerControls.Disable();
+        StopCoroutine(auto);
     }
 }
