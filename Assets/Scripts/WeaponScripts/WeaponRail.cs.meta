@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f0e429c46f3fe064ebbbd722d5cd7a72
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - projectile: {fileID: 289867689156449768, guid: 029f854ee1929da45a31c3fc76324b0f, type: 3}
+  - Weapon: {instanceID: 0}
+  - chargeParticle: {fileID: 6119723395330773443, guid: a28d53c674fa4b14bb8061a2b41eacec, type: 3}
+  - chargeDispersal: {fileID: 845580893638812069, guid: 194bb7da24051b64ca814a6990cf515e, type: 3}
+  - tempPart: {instanceID: 0}
+  - player: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

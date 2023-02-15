@@ -80,6 +80,24 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwapActive"",
+                    ""type"": ""Button"",
+                    ""id"": ""1d3521bc-70d6-4ddd-90f5-5275d1118a2e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PickUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""cfdd26af-a340-485b-a2b5-b2143e8f6a6c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -236,6 +254,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""SwapWep"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7dc96505-313e-4a75-9550-f6729eb85c5b"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""SwapActive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f62f17fd-4f45-47a3-9121-d60f1acbd5b3"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""PickUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -289,6 +329,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Controls_PrimaryShoot = m_Controls.FindAction("PrimaryShoot", throwIfNotFound: true);
         m_Controls_SecondaryShoot = m_Controls.FindAction("SecondaryShoot", throwIfNotFound: true);
         m_Controls_SwapWep = m_Controls.FindAction("SwapWep", throwIfNotFound: true);
+        m_Controls_SwapActive = m_Controls.FindAction("SwapActive", throwIfNotFound: true);
+        m_Controls_PickUp = m_Controls.FindAction("PickUp", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -354,6 +396,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_PrimaryShoot;
     private readonly InputAction m_Controls_SecondaryShoot;
     private readonly InputAction m_Controls_SwapWep;
+    private readonly InputAction m_Controls_SwapActive;
+    private readonly InputAction m_Controls_PickUp;
     public struct ControlsActions
     {
         private @PlayerControls m_Wrapper;
@@ -364,6 +408,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @PrimaryShoot => m_Wrapper.m_Controls_PrimaryShoot;
         public InputAction @SecondaryShoot => m_Wrapper.m_Controls_SecondaryShoot;
         public InputAction @SwapWep => m_Wrapper.m_Controls_SwapWep;
+        public InputAction @SwapActive => m_Wrapper.m_Controls_SwapActive;
+        public InputAction @PickUp => m_Wrapper.m_Controls_PickUp;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -391,6 +437,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @SwapWep.started -= m_Wrapper.m_ControlsActionsCallbackInterface.OnSwapWep;
                 @SwapWep.performed -= m_Wrapper.m_ControlsActionsCallbackInterface.OnSwapWep;
                 @SwapWep.canceled -= m_Wrapper.m_ControlsActionsCallbackInterface.OnSwapWep;
+                @SwapActive.started -= m_Wrapper.m_ControlsActionsCallbackInterface.OnSwapActive;
+                @SwapActive.performed -= m_Wrapper.m_ControlsActionsCallbackInterface.OnSwapActive;
+                @SwapActive.canceled -= m_Wrapper.m_ControlsActionsCallbackInterface.OnSwapActive;
+                @PickUp.started -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPickUp;
+                @PickUp.performed -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPickUp;
+                @PickUp.canceled -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPickUp;
             }
             m_Wrapper.m_ControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -413,6 +465,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @SwapWep.started += instance.OnSwapWep;
                 @SwapWep.performed += instance.OnSwapWep;
                 @SwapWep.canceled += instance.OnSwapWep;
+                @SwapActive.started += instance.OnSwapActive;
+                @SwapActive.performed += instance.OnSwapActive;
+                @SwapActive.canceled += instance.OnSwapActive;
+                @PickUp.started += instance.OnPickUp;
+                @PickUp.performed += instance.OnPickUp;
+                @PickUp.canceled += instance.OnPickUp;
             }
         }
     }
@@ -452,5 +510,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnPrimaryShoot(InputAction.CallbackContext context);
         void OnSecondaryShoot(InputAction.CallbackContext context);
         void OnSwapWep(InputAction.CallbackContext context);
+        void OnSwapActive(InputAction.CallbackContext context);
+        void OnPickUp(InputAction.CallbackContext context);
     }
 }
