@@ -23,6 +23,7 @@ public class CellularAutomata : MonoBehaviour
     {
         initialGen();
         cleanUp();
+        MapOut();
         spawn();
         nm = GameObject.Find("Nav").GetComponent<NavMeshSurface>();
         bake = new GameObject[width * height];
@@ -36,7 +37,7 @@ public class CellularAutomata : MonoBehaviour
         rocks = new string[width,height];
         for (int i = 0; i < width; i++) 
         {
-            for (int j = 0; j < width; j++)
+            for (int j = 0; j < height; j++)
             {
                 float rand = Random.Range(0f,1f);
                 if (rand < startAlive)
@@ -73,7 +74,7 @@ public class CellularAutomata : MonoBehaviour
                     {
                         numNeighbours++;
                     }
-                    if (i > 0 && j > 0 && i < height && rocks[i + 1, j - 1].Equals("w"))
+                    if (i > 0 && j > 0 && i < width && rocks[i + 1, j - 1].Equals("w"))
                     {
                         numNeighbours++;
                     }
@@ -82,20 +83,20 @@ public class CellularAutomata : MonoBehaviour
                     {
                         numNeighbours++;
                     }
-                    if (i != 0 && j > 0 && i < height && rocks[i + 1, j].Equals("w"))
+                    if (i != 0 && j > 0 && i < width && rocks[i + 1, j].Equals("w"))
                     {
                         numNeighbours++;
                     }
                     //Cells below ie SW, S , SE
-                    if (i != 0 && j > 0 && j < width && rocks[i, j + 1].Equals("w"))
+                    if (i != 0 && j > 0 && j < height && rocks[i, j + 1].Equals("w"))
                     {
                         numNeighbours++;
                     }
-                    if (i != 0 && j > 0 && i < height && j < width && rocks[i + 1, j + 1].Equals("w"))
+                    if (i != 0 && j > 0 && i < width && j < height && rocks[i + 1, j + 1].Equals("w"))
                     {
                         numNeighbours++;
                     }
-                    if (i != 0 && j > 0 && j < width && rocks[i - 1, j + 1].Equals("w"))
+                    if (i != 0 && j > 0 && j < height && rocks[i - 1, j + 1].Equals("w"))
                     {
                         numNeighbours++;
                     }
@@ -146,20 +147,26 @@ public class CellularAutomata : MonoBehaviour
                     {
                         numEmpty++;
                     }
-                    if (rocks[i, j].Equals("") && numEmpty == 5)
+                   /* if (rocks[i, j].Equals("") && numEmpty == 5)
                     {
                         rocks[i, j] = "s";
-                    }
+                    }*/
                 }
             }
         }
+    }
+
+    public void MapOut() 
+    {
+    
+    
     }
 
     public void spawn() 
     {
         for (int i = 0; i < width; i++)
         {
-            for (int j = 0; j < width; j++)
+            for (int j = 0; j < height; j++)
             {
                 if (rocks[i, j] == "w")
                 {
@@ -176,9 +183,9 @@ public class CellularAutomata : MonoBehaviour
                     Vector3 pos = new Vector3(5 * i, 0, 5 * j);
 
 
-                    GameObject obj = Instantiate(enemy);
+                   // GameObject obj = Instantiate(enemy);
 
-                    obj.transform.position = pos;
+                   // obj.transform.position = pos;
                 }
             }
 

@@ -170,12 +170,12 @@ MonoBehaviour:
   nm: {fileID: 0}
   enemy: {fileID: 8339056735698035640, guid: 36b2b9caf8c6ad941ba66ca8a33afefa, type: 3}
   asteroid: {fileID: 4661058318666892009, guid: 5e7fa468399f5f341b429a5ae88f4627, type: 3}
-  birthVal: 3
+  birthVal: 4
   deathVal: 4
-  width: 100
-  height: 100
-  startAlive: 0.45
-  steps: 3
+  width: 150
+  height: 300
+  startAlive: 0.67
+  steps: 30
 --- !u!1 &399938489
 GameObject:
   m_ObjectHideFlags: 0
