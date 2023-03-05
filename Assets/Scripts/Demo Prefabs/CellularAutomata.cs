@@ -8,16 +8,19 @@ using System.Linq;
 
 public class CellularAutomata : MonoBehaviour
 {
-    int cellvisits =0;
+    int cellvisits = 0;
     public NavMeshSurface nm;
     [SerializeField] GameObject enemy;
     [SerializeField] GameObject asteroid;
+    [SerializeField] GameObject test;
+    [SerializeField] GameObject test2;
     [SerializeField] float birthVal;
     [SerializeField] float deathVal;
     [SerializeField] int width;
     [SerializeField] int height;
     [SerializeField] float startAlive;
     [SerializeField] float steps;
+    [Range(0.0f, 1f)] public float sizeOfLargest;
     GameObject[] bake;
 
 
@@ -35,6 +38,7 @@ public class CellularAutomata : MonoBehaviour
     List<Node> openCell = new List<Node>();
 
     List<List<Node>> caves = new List<List<Node>>();
+    List<List<Node>> actualCaves = new List<List<Node>>();
 
     void Start()
     {
@@ -42,17 +46,18 @@ public class CellularAutomata : MonoBehaviour
         CleanUp();
         Visited = new int[width, height];
         FloodFillManager(Visited);
-
+        caveCleaner();
+        caveJoiner();
         Spawn();
+
+
         nm = GameObject.Find("Nav").GetComponent<NavMeshSurface>();
         bake = new GameObject[width * height];
-        nm.BuildNavMesh();
-        nm.UpdateNavMesh(nm.navMeshData);
+        //nm.BuildNavMesh();
+        //nm.UpdateNavMesh(nm.navMeshData);
+        
         //Debug.Log("Cave Amount: " + caves.Count);
-        for (int i = 0; i < caves.Count; i++) 
-        {
-            Debug.Log("Cave Number: "+i+" "+caves.ElementAt(i).Count);
-        }
+        
     }
 
     public void InitialGen()
@@ -73,8 +78,25 @@ public class CellularAutomata : MonoBehaviour
                     rocks[i, j] = "";
                 }
                 //Debug.Log(rocks[i, j]);
+            } 
+        }
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                rocks[1, j] = "w";
+                rocks[2, j] = "w";
+                rocks[3, j] = "w";
+                rocks[width - 1, j] = "w";
+                rocks[width - 2, j] = "w";
+                rocks[width - 3, j] = "w";
             }
-            
+            rocks[i, 1] = "w";
+            rocks[i, 2] = "w";
+            rocks[i, 3] = "w";
+            rocks[i, height - 1] = "w";
+            rocks[i, height - 2] = "w";
+            rocks[i, height - 3] = "w";
         }
     }
 
@@ -126,8 +148,6 @@ public class CellularAutomata : MonoBehaviour
                     }
                     //cout << numNeighbours << endl;
 
-                    
-
                     if (rocks[i, j].Equals("w") && numNeighbours <birthVal)
                     {
                         rocks[i, j] = "";
@@ -136,11 +156,6 @@ public class CellularAutomata : MonoBehaviour
                     {
                         rocks[i, j] = "w";
                     }
-
-
-                    
-
-                    
                 }
             }
         }
@@ -156,10 +171,7 @@ public class CellularAutomata : MonoBehaviour
                 if (rocks[i, j] == "w")
                 {
                     Vector3 pos = new Vector3(15 * i, 0, 15 * j);
-
-
                     GameObject obj = Instantiate(asteroid);
-
                     obj.transform.position = pos;
                     deadCells++;
                 }
@@ -168,22 +180,26 @@ public class CellularAutomata : MonoBehaviour
                     openCells++;
                 }
 
-                if (rocks[i, j] == "s") 
+                if (rocks[i, j] == "r") 
                 {
-                    Vector3 pos = new Vector3(5 * i, 0, 5 * j);
+                    Vector3 pos = new Vector3(15 * i, 0, 15 * j);
+                    GameObject obj = Instantiate(test);
+                    obj.transform.position = pos;
+                    //deadCells++;
+                }
 
-
-                   // GameObject obj = Instantiate(enemy);
-
-                   // obj.transform.position = pos;
+                if (rocks[i, j] == "b")
+                {
+                    Vector3 pos = new Vector3(15 * i, 0, 15 * j);
+                    GameObject obj = Instantiate(test2);
+                    obj.transform.position = pos;
+                    //deadCells++;
                 }
             }
-
         }
         Debug.Log("deadCells "+ deadCells);
         Debug.Log("cellVisits " + cellvisits);
         Debug.Log("openCells " + openCells);
-
     }
 
     
@@ -192,7 +208,6 @@ public class CellularAutomata : MonoBehaviour
     public void FloodFillManager(int[,] visited) 
     {
         List<Node> temp = new List<Node>();
-        //List<int[,]> caves = new List<int[,]>();
         for (int i = 0; i < width; i++) 
         {
             
@@ -211,23 +226,13 @@ public class CellularAutomata : MonoBehaviour
 
 
                     }
-
-
-
-                    //Debug.Log("Current Cave Size: "+openCell.Count);
                 }
                 else 
                 {
                     openCell = new List<Node>();
                 }
-                
-
-
-            }
-            
+            }   
         }
-
-        //Debug.Log("VisitedLenght: "+Visited.Length);
     }
 
 
@@ -287,6 +292,81 @@ public class CellularAutomata : MonoBehaviour
 
         return visited;
     }
-        
-    
+
+
+    public void caveCleaner() 
+    {
+        float sumSize = 0;
+        float avgSize;
+        float largest = 0;
+        for (int i = 0; i < caves.Count; i++)
+        {
+            Debug.Log("Cave Number: " + i + " " + caves.ElementAt(i).Count);
+            if (caves.ElementAt(i).Count > largest)
+            {
+                largest = caves.ElementAt(i).Count;
+                Debug.Log("Largest " + largest);
+            }
+        }
+
+        avgSize = sumSize / caves.Count;
+        Debug.Log("Average Size = " + avgSize);
+
+        for (int i = 0; i < caves.Count; i++)
+        {
+            if (caves.ElementAt(i).Count() < largest * sizeOfLargest)
+            {
+                foreach (Node f in caves.ElementAt(i))
+                {
+                    rocks[f.x, f.y] = "r";
+                }
+                Debug.Log("Smaller Than");
+            }
+            else
+            {
+                actualCaves.Add(caves.ElementAt(i));
+            }
+
+        }
+        Debug.Log("Caves After: " + actualCaves.Count);
+    }
+
+
+    public void caveJoiner()
+    {
+        Vector2 pos1 = new Vector2(0,0);
+        Vector2 pos2 = new Vector2(0,0);
+        for (int i = 0; i < actualCaves.Count; i++)
+        {
+            pos1.x = 0;
+            pos1.y = 0;
+            pos2.x = 0;
+            pos2.y = 0;
+            for (int j = 0; j < actualCaves.Count; j++)
+            {
+                
+                foreach (Node f in actualCaves.ElementAt(i))
+                {
+                    foreach (Node g in actualCaves.ElementAt(j))
+                    {
+                        Vector2 t1 = new Vector2(f.x, f.y);
+                        Vector2 t2 = new Vector2(g.x, g.y);
+                        if (Vector2.Distance(t1, t2) < Vector2.Distance(pos1,pos2) || Vector2.Distance(pos1, pos2)==0) 
+                        {
+                            pos1.x = f.x;
+                            pos1.y = f.y;
+                            pos2.x = g.x;
+                            pos2.y = g.y;
+                        }
+                    }
+                }
+                
+            }
+            if (pos1.x != 0 && pos1.y != 0 && pos2.x != 0 && pos2.y != 0)
+            {
+                rocks[(int)pos1.x, (int)pos1.y] = "b";
+                rocks[(int)pos2.x, (int)pos2.y] = "b";
+            }
+        }
+    }
 }
