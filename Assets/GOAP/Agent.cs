@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-
+/*
 public class SubGoal
 {
     public Dictionary<string, int> sgoals;
@@ -120,3 +120,4 @@ public class Agent : MonoBehaviour
         }
     }
 }
+*/

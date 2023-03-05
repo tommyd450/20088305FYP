@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6254969363101392368}
   - component: {fileID: 4522818806401251285}
   m_Layer: 0
-  m_Name: Asteroid2
+  m_Name: teroid2Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 6bfb298b9db24484fbc2c3a6091eda47, type: 3}
+  - {fileID: 2100000, guid: d54efceb7cdedc4418b67c93a43464b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+
 public class MoveTo : Agent
 {
     // Start is called before the first frame update
@@ -22,3 +24,4 @@ public class MoveTo : Agent
     }
 
 }
+*/
