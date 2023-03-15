@@ -20,7 +20,7 @@ public class MoveAwayFromTarget : Node
     public override NodeState Evaluate() 
     {
 
-        if (Vector3.Distance(_transform.position, _player.transform.position) > 25)
+        if (Vector3.Distance(_transform.position, _player.transform.position) > 15)
         {
 
             return NodeState.SUCCESS;

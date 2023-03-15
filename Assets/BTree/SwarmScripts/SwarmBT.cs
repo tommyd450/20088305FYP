@@ -11,6 +11,8 @@ public class SwarmBT : BTree.Tree
     public float timePassed;
     public GameObject player;
 
+    [SerializeField] public GameObject[] squadron;
+
 
 
     private Transform fob;
@@ -18,41 +20,57 @@ public class SwarmBT : BTree.Tree
     protected override Node SetupTree() 
     {
         timePassed += Time.deltaTime;
-        Node root = new Selector(new List<Node>
+        Node root = new Sequence(new List<Node>
         {
+
+            new LeaderElection(squadron,GetComponent<SquadManagement>()),
 
             new Selector(new List<Node>
             {
                 new Sequence(new List<Node>
                 {
-                    new checkTargetinRange(player,this.transform,25),
-                    new MoveAwayFromTarget(player,this.transform,GetComponent<NavMeshAgent>())
+                    new LeaderCheck(GetComponent<SquadManagement>()),
+                    new FormationFlight(player,GetComponent<SquadManagement>(),GetComponent<NavMeshAgent>(),this.gameObject)
                 }),
+
                 new Sequence(new List<Node>
                 {
-                    new checkTargetOutOfRange(player,this.transform,25),
-                    new MoveToTarget(player, this.transform,GetComponent<NavMeshAgent>()),
-
-                }),
-                
+                    new InSquadCheck(GetComponent<SquadManagement>()), // Checks if the object 
+                    new Selector(new List<Node> 
+                    {
+                        new Sequence(new List<Node>
+                        {
+                            new checkTargetinRange(player,this.transform,15),
+                            new MoveAwayFromTarget(player,this.transform,GetComponent<NavMeshAgent>())
+                        }),
+                        new Sequence(new List<Node>
+                        {
+                            new checkTargetOutOfRange(player,this.transform,25),
+                            new MoveToTarget(player, this.transform,GetComponent<NavMeshAgent>()),
+                        }),
+                    })
+                })
 
             }),
-                
-                
+
+            
             
 
 
-            new Sequence(new List<Node>
-            {
 
-                new checkTargetinRange(player,this.transform,25),
-                new shootAtTarget(player,this.transform,timePassed)
-            }),
-                
-            
-            
+
+
+                /*new Sequence(new List<Node>
+                {
+
+                    new checkTargetinRange(player,this.transform,25),
+                    new shootAtTarget(player,this.transform,timePassed)
+                }),*/
            
-        }); ;
+
+           
+
+        }); ; ; ;
         timePassed = 0;
         print("reset");
 
