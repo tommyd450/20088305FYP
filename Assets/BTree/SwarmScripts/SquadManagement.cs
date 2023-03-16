@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SquadManagement: MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class SquadManagement: MonoBehaviour
 
         foreach (GameObject x in cand) 
         {
-            if (x != this.gameObject && candidates.Count() <3) 
+            if ( x.GetComponent<SquadManagement>().Leader==null && x.GetComponent<SquadManagement>().isLeader == false && x.GetComponent<SquadManagement>().isFollower == false) 
             {
                 candidates.Add(x);
             }
@@ -30,17 +31,36 @@ public class SquadManagement: MonoBehaviour
         for (int i = 0; i< candidates.Count();i++) 
         {
             GameObject x = candidates.ElementAt(i); 
-            if ( x.GetComponent<SquadManagement>().isLeader == false && x.GetComponent<SquadManagement>().isFollower == false ) 
+            
+            Debug.Log("SQSIZE " + squadron.Count());
+            if (isFollower == false && x!=this.gameObject && squadron.Count() < 3 && x.GetComponent<SquadManagement>().isLeader==false && x.GetComponent<SquadManagement>().isFollower == false) 
             {
-                
-                Debug.Log("SQSIZE " + squadron.Count());
-                squadron.Add(x);
+                NavMeshAgent nm = x.GetComponent<NavMeshAgent>();
                 x.GetComponent<SquadManagement>().isFollower = true;
                 x.GetComponent<SquadManagement>().Leader = this.gameObject;
+                nm.acceleration = 300;
+                nm.angularSpeed = 300;
+                nm.speed = 300;
+                nm.stoppingDistance = 10;
+                nm.autoBraking = true;
                 isLeader = true;
-                
+                squadron.Add(x);
             }
+        }
+    }
 
+    public void PassingTheTorch() 
+    {
+        foreach (GameObject x in squadron) 
+        {
+            NavMeshAgent nm = x.GetComponent<NavMeshAgent>();
+            x.GetComponent<SquadManagement>().isFollower = false;
+            x.GetComponent<SquadManagement>().Leader = null;
+            nm.acceleration = 100;
+            nm.angularSpeed = 200;
+            nm.speed = 100;
+            nm.stoppingDistance = 0;
+            nm.autoBraking = false;
         }
     }
 }

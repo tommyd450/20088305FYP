@@ -15,7 +15,7 @@ public class InSquadCheck : Node
     public override NodeState Evaluate() 
     {
         //Debug.Log("IsLeaderCheck");
-        if (_squad.isLeader) 
+        if (_squad.isFollower == false) 
         {
             return NodeState.SUCCESS;
         }

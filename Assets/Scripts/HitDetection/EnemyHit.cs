@@ -8,11 +8,19 @@ public class EnemyHit : Hit
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag.Equals("PlayerProj") && timePassed > 2) 
+        if (other.gameObject.tag.Equals("PlayerProj") && timePassed > 0.5) 
         {
             timePassed = 0;
             health = health - 10;
             print("health: " + health);
+
+            if (health < 0) 
+            {
+                GetComponent<SquadManagement>().PassingTheTorch();
+                Destroy(this.gameObject, 1);
+            }
         }
     }
+
+    
 }

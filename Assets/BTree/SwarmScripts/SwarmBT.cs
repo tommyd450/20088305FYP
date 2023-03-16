@@ -27,11 +27,7 @@ public class SwarmBT : BTree.Tree
 
             new Selector(new List<Node>
             {
-                new Sequence(new List<Node>
-                {
-                    new LeaderCheck(GetComponent<SquadManagement>()),
-                    new FormationFlight(player,GetComponent<SquadManagement>(),GetComponent<NavMeshAgent>(),this.gameObject)
-                }),
+                
 
                 new Sequence(new List<Node>
                 {
@@ -49,7 +45,12 @@ public class SwarmBT : BTree.Tree
                             new MoveToTarget(player, this.transform,GetComponent<NavMeshAgent>()),
                         }),
                     })
-                })
+                }),
+                new Sequence(new List<Node>
+                {
+                    new LeaderCheck(GetComponent<SquadManagement>()),
+                    new FormationFlight(player,GetComponent<SquadManagement>(),GetComponent<NavMeshAgent>(),this.gameObject)
+                }),
 
             }),
 
