@@ -53,8 +53,8 @@ public class CellularAutomata : MonoBehaviour
 
         nm = GameObject.Find("Nav").GetComponent<NavMeshSurface>();
         bake = new GameObject[width * height];
-        //nm.BuildNavMesh();
-        //nm.UpdateNavMesh(nm.navMeshData);
+        nm.BuildNavMesh();
+        nm.UpdateNavMesh(nm.navMeshData);
         
         //Debug.Log("Cave Amount: " + caves.Count);
         
