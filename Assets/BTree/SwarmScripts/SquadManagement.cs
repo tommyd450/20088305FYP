@@ -27,12 +27,12 @@ public class SquadManagement: MonoBehaviour
             }
             
         }
-        Debug.Log("Squadron Size : " + candidates.Count());
+        //Debug.Log("Squadron Size : " + candidates.Count());
         for (int i = 0; i< candidates.Count();i++) 
         {
             GameObject x = candidates.ElementAt(i); 
             
-            Debug.Log("SQSIZE " + squadron.Count());
+            //Debug.Log("SQSIZE " + squadron.Count());
             if (isFollower == false && x!=this.gameObject && squadron.Count() < 3 && x.GetComponent<SquadManagement>().isLeader==false && x.GetComponent<SquadManagement>().isFollower == false) 
             {
                 NavMeshAgent nm = x.GetComponent<NavMeshAgent>();
@@ -53,14 +53,17 @@ public class SquadManagement: MonoBehaviour
     {
         foreach (GameObject x in squadron) 
         {
-            NavMeshAgent nm = x.GetComponent<NavMeshAgent>();
-            x.GetComponent<SquadManagement>().isFollower = false;
-            x.GetComponent<SquadManagement>().Leader = null;
-            nm.acceleration = 100;
-            nm.angularSpeed = 200;
-            nm.speed = 100;
-            nm.stoppingDistance = 0;
-            nm.autoBraking = false;
+            if (x != null)
+            {
+                NavMeshAgent nm = x.GetComponent<NavMeshAgent>();
+                x.GetComponent<SquadManagement>().isFollower = false;
+                x.GetComponent<SquadManagement>().Leader = null;
+                nm.acceleration = 100;
+                nm.angularSpeed = 200;
+                nm.speed = 100;
+                nm.stoppingDistance = 0;
+                nm.autoBraking = false;
+            }
         }
     }
 }

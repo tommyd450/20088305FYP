@@ -23,6 +23,7 @@ public class MoveToTarget : Node
         _agent.SetDestination(_player.transform.position);
         if (Vector3.Distance(_transform.position, _player.transform.position) <= 25)
         {
+            
             //_agent.isStopped = true;
             return NodeState.SUCCESS;
         }

@@ -6,6 +6,7 @@ using System.Linq;
 
 
 
+
 public class CellularAutomata : MonoBehaviour
 {
     int cellvisits = 0;
@@ -22,7 +23,7 @@ public class CellularAutomata : MonoBehaviour
     [SerializeField] float steps;
     [Range(0.0f, 1f)] public float sizeOfLargest;
     GameObject[] bake;
-
+    public enum DIR { NORTH, EAST, SOUTH, WEST, NIL };
 
 
     public string[,] rocks;
@@ -33,12 +34,15 @@ public class CellularAutomata : MonoBehaviour
     {
         public int x;
         public int y;
+        public DIR direction;
     }
 
     List<Node> openCell = new List<Node>();
 
     List<List<Node>> caves = new List<List<Node>>();
-    List<List<Node>> actualCaves = new List<List<Node>>();
+    public List<List<Node>> actualCaves = new List<List<Node>>();
+
+    public List<List<Node>> caveConnections = new List<List<Node>>();
 
     void Start()
     {
@@ -48,6 +52,8 @@ public class CellularAutomata : MonoBehaviour
         FloodFillManager(Visited);
         caveCleaner();
         caveJoiner();
+        TunnelManager();
+
         Spawn();
 
 
@@ -56,7 +62,7 @@ public class CellularAutomata : MonoBehaviour
         nm.BuildNavMesh();
         nm.UpdateNavMesh(nm.navMeshData);
         
-        //Debug.Log("Cave Amount: " + caves.Count);
+        Debug.Log("Cave Connections Pairings " + caveConnections.Count);
         
     }
 
@@ -84,6 +90,7 @@ public class CellularAutomata : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
+                rocks[0, j] = "w";
                 rocks[1, j] = "w";
                 rocks[2, j] = "w";
                 rocks[3, j] = "w";
@@ -91,6 +98,7 @@ public class CellularAutomata : MonoBehaviour
                 rocks[width - 2, j] = "w";
                 rocks[width - 3, j] = "w";
             }
+            rocks[i,0] = "w";
             rocks[i, 1] = "w";
             rocks[i, 2] = "w";
             rocks[i, 3] = "w";
@@ -173,6 +181,7 @@ public class CellularAutomata : MonoBehaviour
                     Vector3 pos = new Vector3(15 * i, 0, 15 * j);
                     GameObject obj = Instantiate(asteroid);
                     obj.transform.position = pos;
+                    obj.name = "x: " + i + " y: " + j; 
                     deadCells++;
                 }
                 else 
@@ -223,8 +232,6 @@ public class CellularAutomata : MonoBehaviour
                     if (Visited[i, j] == 1)
                     {
                         caves.Add(openCell);
-
-
                     }
                 }
                 else 
@@ -254,11 +261,7 @@ public class CellularAutomata : MonoBehaviour
             cellvisits++;
             visited[x, y] = 1;
         }
-        
-        
-        
 
-        
         if (rocks[x,y].Equals("")&&visited[x,y]==1) 
         {
             if (x-1>=0 && rocks[x - 1, y].Equals("") && visited[x-1, y] != 1)
@@ -285,11 +288,6 @@ public class CellularAutomata : MonoBehaviour
 
             
         }
-        
-
-
-
-
         return visited;
     }
 
@@ -318,7 +316,8 @@ public class CellularAutomata : MonoBehaviour
             {
                 foreach (Node f in caves.ElementAt(i))
                 {
-                    rocks[f.x, f.y] = "r";
+                    //rocks[f.x, f.y] = "r"; // This line can be uncommented to show caves that have been removed from the equation.
+                    rocks[f.x, f.y] = "w";
                 }
                 Debug.Log("Smaller Than");
             }
@@ -334,39 +333,226 @@ public class CellularAutomata : MonoBehaviour
 
     public void caveJoiner()
     {
+        Node p1= new Node(), p2 = new Node();
         Vector2 pos1 = new Vector2(0,0);
         Vector2 pos2 = new Vector2(0,0);
-        for (int i = 0; i < actualCaves.Count; i++)
+        List<List<Node>> visited = new List<List<Node>>();
+        foreach (List < Node > caveA in actualCaves) 
         {
+            List<Node> points = new List<Node>();
+            if (pos1.x != 0 && pos1.y != 0 && pos2.x != 0 && pos2.y != 0)
+            {
+                rocks[(int)pos1.x, (int)pos1.y] = "b";
+
+                rocks[(int)pos2.x, (int)pos2.y] = "b";
+                points.Add(p1);
+                points.Add(p2);
+                Debug.Log("Points per" + points.Count());
+                caveConnections.Add(points);
+            }
             pos1.x = 0;
             pos1.y = 0;
             pos2.x = 0;
             pos2.y = 0;
+            foreach (List<Node> caveB in actualCaves)
+            {
+                foreach (Node f in caveA)
+                {
+                    foreach (Node g in caveB)
+                    {
+                        Vector2 t1 = new Vector2(f.x, f.y);
+                        Vector2 t2 = new Vector2(g.x, g.y);
+                        if ((Vector2.Distance(t1, t2) < Vector2.Distance(pos1, pos2) || Vector2.Distance(pos1, pos2) == 0))
+                        {
+                            pos1.x = f.x;
+                            pos1.y = f.y;
+                            pos2.x = g.x;
+                            pos2.y = g.y;
+                            p1 = f;
+                            p2 = g;
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            visited.Add(caveA);
+        }
+    }
+
+    /*public void caveJoiner(int x, int y, int dx, int dy, List<Node> start) 
+    {
+        Node p1 = new Node(), p2 = new Node();
+        Vector2 pos1 = new Vector2(0, 0);
+        Vector2 pos2 = new Vector2(0, 0);
+        List<List<float>> caveDistances = new List<List<float>>();
+
+        for (int i =0;i<actualCaves.Count; i++) 
+        {
+            caveDistances.Add(new List<float>());
             for (int j = 0; j < actualCaves.Count; j++)
             {
-                
+                caveDistances.ElementAt(i).Add(0f);
                 foreach (Node f in actualCaves.ElementAt(i))
                 {
                     foreach (Node g in actualCaves.ElementAt(j))
                     {
                         Vector2 t1 = new Vector2(f.x, f.y);
                         Vector2 t2 = new Vector2(g.x, g.y);
-                        if (Vector2.Distance(t1, t2) < Vector2.Distance(pos1,pos2) || Vector2.Distance(pos1, pos2)==0) 
+                        if (Vector2.Distance(t1, t2) < Vector2.Distance(pos1, pos2) || Vector2.Distance(pos1, pos2) == 0)
                         {
                             pos1.x = f.x;
                             pos1.y = f.y;
                             pos2.x = g.x;
                             pos2.y = g.y;
+                            p1 = f;
+                            p2 = g;
+                            caveDistances.ElementAt(i).ElementAt(j) = 30f;
                         }
                     }
                 }
-                
+
             }
-            if (pos1.x != 0 && pos1.y != 0 && pos2.x != 0 && pos2.y != 0)
-            {
-                rocks[(int)pos1.x, (int)pos1.y] = "b";
-                rocks[(int)pos2.x, (int)pos2.y] = "b";
+        } 
+    }*/
+
+
+    public void TunnelManager() 
+    {
+        List<Node> p = new List<Node>();
+
+        foreach (List<Node> e in caveConnections)
+        {
+            Debug.Log("Connet Lenght is: " + e.Count);
+            p = TunnelPath(e.ElementAt(0).x, e.ElementAt(0).y, p, e.ElementAt(1).x, e.ElementAt(1).y, DIR.NIL,30000);
+            if (p.Count> -1) 
+            { 
+                foreach (Node u in p)
+                {
+                    
+                    Debug.Log("Got in to change direction");
+                    if ((u.x == e.ElementAt(1).x && u.y == e.ElementAt(1).y )) 
+                    {
+                        Debug.Log("The following directions: " + u.direction + " : " + e.ElementAt(1).direction);
+                        e.ElementAt(1).direction = u.direction;
+                        if (p.Count > 4)
+                        {
+                            e.RemoveAt(1);
+                            e.Insert(1, p.ElementAt(p.Count-2));
+                        }
+                    }
+
+                    if (u.x == e.ElementAt(0).x && u.y == e.ElementAt(0).y) 
+                    {
+
+                        if (p.Count > 3)
+                        {
+                            e.RemoveAt(0);
+                            e.Insert(0, p.ElementAt(2));
+                        }
+                    }
+
+
+                    Debug.Log("Length After operation:" + e.Count + " " + e.ElementAt(1).direction);
+                   
+                    Debug.Log("Path : " + u.x + " : " + u.y);
+                    Debug.Log("Path Direction  : " +u.direction);
+                    rocks[u.x, u.y] = "";
+                }
             }
         }
+    }
+
+    public List<Node> TunnelPath(int x, int y, List<Node> path, int dX , int dY,DIR direction, float cost) 
+    {
+        //Debug.Log("Current coord " + x + "  " + y);
+        //Debug.Log("Rocks " + rocks[x, y]);
+        Vector2 p1 = new Vector2(x, y);
+        Vector2 p2 = new Vector2(dX, dY);
+        float currentCost = Vector2.Distance(p1,p2);
+        float nextCost = 0;
+        //Debug.Log("Position rn: " + p1.ToString());
+        //Debug.Log("Current Cost:" +currentCost);
+        
+        int newX = 0;
+        int newY = 0;
+
+        DIR dir = DIR.NIL;
+        if ((x <= width && y <= height && (rocks[x, y].Equals("w") || rocks[x, y].Equals("b"))) || (x==dX && y ==dY))
+        {
+            Node n = new Node() { x = x, y = y, direction = direction };
+            print("YEP");
+            path.Add(n);
+        }
+ 
+
+        if (x == dX && y == dY)
+        {
+            rocks[x, y] = "";
+            return path;
+        }
+        if (x < width && y < height && x>0 && y>0 ) 
+        {
+            if (x - 1 >= 0 && (rocks[x - 1, y].Equals("w")|| rocks[x - 1, y].Equals("b")))
+            {
+                print("Left");
+                Vector2 check = p1;
+
+                check.x -= 1;
+                if (currentCost>=Vector2.Distance(check,p2)) 
+                {
+                    nextCost = Vector2.Distance(check, p2);
+                    newX = (int)check.x;
+                    newY = (int)check.y;
+                    dir = DIR.WEST;
+                }
+            }
+
+            if (x + 1 <= width - 1 && x != width && y <= height && (rocks[x + 1, y].Equals("w") || rocks[x + 1, y].Equals("b")))
+            {
+                print("Right");
+                Vector2 check = p1;
+                check.x += 1;
+                if (currentCost >= Vector2.Distance(check, p2))
+                {
+                    nextCost = Vector2.Distance(check, p2);
+                    newX = (int)check.x;
+                    newY = (int)check.y;
+                    dir = DIR.EAST;
+                }
+            }
+            if (y - 1 >= 0 && (rocks[x, y-1].Equals("w") || rocks[x , y-1].Equals("b")))
+            {
+                print("Down");
+                Vector2 check = p1;
+                check.y -= 1;
+                if (currentCost >= Vector2.Distance(check, p2))
+                {
+                    nextCost = Vector2.Distance(check, p2);
+                    newX = (int)check.x;
+                    newY = (int)check.y;
+                    dir = DIR.SOUTH;
+                }
+
+            }
+            if (y + 1 <= height - 1 && x <= width && (rocks[x , y+1].Equals("w") || rocks[x , y+1].Equals("b")))
+            {
+                print("Up");
+                Vector2 check = p1;
+                check.y += 1;
+                if (currentCost >= Vector2.Distance(check, p2))
+                {
+                    nextCost = Vector2.Distance(check, p2);
+                    newX = (int)check.x;
+                    newY = (int)check.y;
+                    dir = DIR.NORTH;
+                }
+
+            }
+            return TunnelPath(newX, newY, path, dX, dY,dir ,nextCost);
+        }
+
+        return path;
     }
 }

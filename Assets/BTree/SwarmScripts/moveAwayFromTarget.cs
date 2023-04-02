@@ -43,7 +43,7 @@ public class MoveAwayFromTarget : Node
 
 
         _agent.SetDestination(pos);
-
+        
         return NodeState.RUNNING;
         
         

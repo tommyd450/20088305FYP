@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GOAP TEST.unity
-    guid: 0306d58f92a59824fb2e2fd7dacc3d9f
+    path: Assets/Scenes/DEMO.unity
+    guid: 196f5975abd7bff43b8a2132298a4ae4
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d4469f778f370e041a2a1315ebb76d68, type: 2}
