@@ -234,6 +234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timePassed: 0
   player: {fileID: 1887385420488244554, guid: 8ef17b39390d13342bb344d0bb615c7d, type: 3}
+  proj: {fileID: 3989731531348086678, guid: 504a4ed5d61b9f64f8db47266682d525, type: 3}
   squadron:
   - {fileID: 0}
 --- !u!114 &622186023310311378

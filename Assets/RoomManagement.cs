@@ -77,9 +77,8 @@ public class RoomManagement : MonoBehaviour
             }
             Vector3 entry = new Vector3(x.ElementAt(0).x * 15, 0, x.ElementAt(0).y * 15);
             GameObject e = Instantiate(blocker, entry, Quaternion.identity);
-            e.name ="Entry";
             Debug.Log(x.ElementAt(1).direction);
-
+            doors.Add(e);
             if (x.ElementAt(0).direction == CellularAutomata.DIR.NORTH)
             {
                 //g.transform.position = point;

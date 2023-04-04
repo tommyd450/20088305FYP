@@ -38,9 +38,9 @@ public class SquadManagement: MonoBehaviour
                 NavMeshAgent nm = x.GetComponent<NavMeshAgent>();
                 x.GetComponent<SquadManagement>().isFollower = true;
                 x.GetComponent<SquadManagement>().Leader = this.gameObject;
-                nm.acceleration = 300;
-                nm.angularSpeed = 300;
-                nm.speed = 300;
+                nm.acceleration = 175;
+                nm.angularSpeed = 250;
+                nm.speed = 175;
                 nm.stoppingDistance = 10;
                 nm.autoBraking = true;
                 isLeader = true;

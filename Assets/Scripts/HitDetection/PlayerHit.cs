@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHit : MonoBehaviour
+public class PlayerHit : Hit
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.gameObject.tag.Equals("EnemyProj") && timePassed > 0.5)
+        {
+            timePassed = 0;
+            health = health - 10;
+            print("health: " + health);
+
+            if (health < 0)
+            {
+                GetComponent<SquadManagement>().PassingTheTorch();
+                Destroy(this.gameObject, 1);
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public override void hit() { }
 }
