@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = new Vector3(movement.x, 0f, movement.y);
         //gameObject.transform.position += move * 5 * Time.deltaTime;
         
-
+        
         if (!stickRotation && playerControls.Controls.Movement.IsInProgress() && movement.x != 0 && movement.y != 0)
         {
             Vector2 rotation = playerControls.Controls.Movement.ReadValue<Vector2>();

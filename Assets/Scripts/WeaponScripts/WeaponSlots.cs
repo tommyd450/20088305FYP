@@ -53,8 +53,7 @@ public class WeaponSlots : MonoBehaviour
 
     public void swap() 
     {
-        print("swapPressed");
-
+        activeWeapon.stopCouroutine();
         if (activeWeapon == slot1)
         {
             activeWeapon = slot2;

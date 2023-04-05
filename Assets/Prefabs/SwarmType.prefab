@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 622186023310311380}
   - component: {fileID: 622186023310311378}
   - component: {fileID: 622186023310311368}
+  - component: {fileID: 1378026448637511872}
   m_Layer: 0
   m_Name: SwarmType
   m_TagString: SwarmType
@@ -267,6 +268,20 @@ MonoBehaviour:
   Leader: {fileID: 0}
   isFollower: 0
   squadSize: 0
+--- !u!136 &1378026448637511872
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8869897805869475939}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.976635
+  m_Height: 5.878195
+  m_Direction: 2
+  m_Center: {x: 0.2290268, y: 0, z: -0.6108885}
 --- !u!1001 &3661651177872774849
 PrefabInstance:
   m_ObjectHideFlags: 0

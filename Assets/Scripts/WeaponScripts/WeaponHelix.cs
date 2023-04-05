@@ -64,4 +64,9 @@ public class WeaponHelix : Weapon
     {
         StopCoroutine(auto);
     }
+
+    public override void stopCouroutine()
+    {
+        StopAllCoroutines();
+    }
 }

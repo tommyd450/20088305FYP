@@ -33,7 +33,7 @@ public class shootAtTarget : Node
             Debug.Log("BANG");
             GameObject proj = GameObject.Instantiate(_projectile,_transform.position,Quaternion.identity);
             Vector3 direction = (_player.transform.position- _transform.position).normalized;
-            proj.GetComponent<Rigidbody>().AddForce(direction * 50, ForceMode.Impulse);
+            proj.GetComponent<Rigidbody>().AddForce(direction * 150, ForceMode.Impulse);
             timeP = 0;
             return NodeState.SUCCESS;
         }

@@ -38,12 +38,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Direction"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""4ada54b0-c5b3-40b2-9fb6-af7c81c0497b"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Shoot"",
@@ -166,17 +166,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""650fb48b-6ebd-47ec-8b0f-f3de8eb039dc"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KBM"",
-                    ""action"": ""Direction"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -318,6 +307,11 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""GenericController"",
+            ""bindingGroup"": ""GenericController"",
+            ""devices"": []
         }
     ]
 }");
@@ -500,6 +494,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         {
             if (m_ControllerSchemeIndex == -1) m_ControllerSchemeIndex = asset.FindControlSchemeIndex("Controller");
             return asset.controlSchemes[m_ControllerSchemeIndex];
+        }
+    }
+    private int m_GenericControllerSchemeIndex = -1;
+    public InputControlScheme GenericControllerScheme
+    {
+        get
+        {
+            if (m_GenericControllerSchemeIndex == -1) m_GenericControllerSchemeIndex = asset.FindControlSchemeIndex("GenericController");
+            return asset.controlSchemes[m_GenericControllerSchemeIndex];
         }
     }
     public interface IControlsActions

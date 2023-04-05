@@ -54,5 +54,12 @@ public class WeaponMG : Weapon
         }
     }
 
-    
+    public override void stopCouroutine()
+    {
+        StopAllCoroutines();
+    }
+
+
+
+
 }

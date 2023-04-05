@@ -11,4 +11,6 @@ public abstract class Weapon : MonoBehaviour
 
     public abstract void attackInitiated();
     public abstract void attackReleased();
+
+    public abstract void stopCouroutine();
 }

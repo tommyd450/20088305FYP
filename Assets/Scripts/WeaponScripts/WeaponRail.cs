@@ -89,6 +89,11 @@ public class WeaponRail : Weapon
         release();
     }
 
-   
-    
+    public override void stopCouroutine()
+    {
+        StopAllCoroutines();
+    }
+
+
+
 }

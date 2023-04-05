@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1887385420488244556}
   - component: {fileID: 7601895939007204152}
   - component: {fileID: 621225753}
+  - component: {fileID: 4981926895287677801}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -177,7 +178,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Controls
+  m_DefaultControlScheme: Controller
   m_DefaultActionMap: Controls
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -222,6 +223,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 2.0390868
   m_Center: {x: 0, y: -1.0390868, z: -5.554605e-16}
+--- !u!114 &4981926895287677801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887385420488244554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1e9609aae0bc34097eb5001482b493, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  healthBar: {fileID: 0}
 --- !u!1001 &1887385420640827302
 PrefabInstance:
   m_ObjectHideFlags: 0
