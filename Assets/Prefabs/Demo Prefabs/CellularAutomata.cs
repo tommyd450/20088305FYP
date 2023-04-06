@@ -17,8 +17,8 @@ public class CellularAutomata : MonoBehaviour
     [SerializeField] GameObject test2;
     [SerializeField] float birthVal;
     [SerializeField] float deathVal;
-    [SerializeField] int width;
-    [SerializeField] int height;
+    public int width;
+    public int height;
     [SerializeField] float startAlive;
     [SerializeField] float steps;
     [Range(0.0f, 1f)] public float sizeOfLargest;
@@ -27,7 +27,7 @@ public class CellularAutomata : MonoBehaviour
 
 
     public string[,] rocks;
-
+    
     public int[,] Visited;
 
     public class Node
@@ -46,6 +46,7 @@ public class CellularAutomata : MonoBehaviour
 
     void Start()
     {
+        rocks = new string[width, height];
         InitialGen();
         CleanUp();
         Visited = new int[width, height];
@@ -69,7 +70,7 @@ public class CellularAutomata : MonoBehaviour
     public void InitialGen()
     {
         
-        rocks = new string[width,height];
+        
         for (int i = 0; i < width; i++) 
         {
             for (int j = 0; j < height; j++)
@@ -209,6 +210,8 @@ public class CellularAutomata : MonoBehaviour
         Debug.Log("deadCells "+ deadCells);
         Debug.Log("cellVisits " + cellvisits);
         Debug.Log("openCells " + openCells);
+
+        //GameObject.Find("Minimap").GetComponent<MiniMap>().makeMap();
     }
 
     
@@ -381,43 +384,7 @@ public class CellularAutomata : MonoBehaviour
         }
     }
 
-    /*public void caveJoiner(int x, int y, int dx, int dy, List<Node> start) 
-    {
-        Node p1 = new Node(), p2 = new Node();
-        Vector2 pos1 = new Vector2(0, 0);
-        Vector2 pos2 = new Vector2(0, 0);
-        List<List<float>> caveDistances = new List<List<float>>();
-
-        for (int i =0;i<actualCaves.Count; i++) 
-        {
-            caveDistances.Add(new List<float>());
-            for (int j = 0; j < actualCaves.Count; j++)
-            {
-                caveDistances.ElementAt(i).Add(0f);
-                foreach (Node f in actualCaves.ElementAt(i))
-                {
-                    foreach (Node g in actualCaves.ElementAt(j))
-                    {
-                        Vector2 t1 = new Vector2(f.x, f.y);
-                        Vector2 t2 = new Vector2(g.x, g.y);
-                        if (Vector2.Distance(t1, t2) < Vector2.Distance(pos1, pos2) || Vector2.Distance(pos1, pos2) == 0)
-                        {
-                            pos1.x = f.x;
-                            pos1.y = f.y;
-                            pos2.x = g.x;
-                            pos2.y = g.y;
-                            p1 = f;
-                            p2 = g;
-                            caveDistances.ElementAt(i).ElementAt(j) = 30f;
-                        }
-                    }
-                }
-
-            }
-        } 
-    }*/
-
-
+    
     public void TunnelManager() 
     {
         List<Node> p = new List<Node>();
@@ -439,17 +406,17 @@ public class CellularAutomata : MonoBehaviour
                         if (p.Count > 4)
                         {
                             e.RemoveAt(1);
-                            e.Insert(1, p.ElementAt(p.Count-2));
+                            e.Insert(1, p.ElementAt(p.Count-3));
                         }
                     }
 
                     if (u.x == e.ElementAt(0).x && u.y == e.ElementAt(0).y) 
                     {
 
-                        if (p.Count > 3)
+                        if (p.Count > 4)
                         {
                             e.RemoveAt(0);
-                            e.Insert(0, p.ElementAt(2));
+                            e.Insert(0, p.ElementAt(4));
                         }
                     }
 
@@ -479,7 +446,7 @@ public class CellularAutomata : MonoBehaviour
         int newY = 0;
 
         DIR dir = DIR.NIL;
-        if ((x <= width && y <= height && (rocks[x, y].Equals("w") || rocks[x, y].Equals("b"))) || (x==dX && y ==dY))
+        if (x <= width && y <= height && (rocks[x, y].Equals("w") || rocks[x, y].Equals("b")))
         {
             Node n = new Node() { x = x, y = y, direction = direction };
             print("YEP");

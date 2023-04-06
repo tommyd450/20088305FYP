@@ -50,7 +50,7 @@ public class WeaponMG : Weapon
         while (true)
         {
             shoot();
-            yield return new WaitForSeconds(0.06f);
+            yield return new WaitForSeconds(0.25f);
         }
     }
 
