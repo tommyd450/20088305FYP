@@ -98,6 +98,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""2566670a-0537-4082-bd3e-af545205a400"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -265,6 +274,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""PickUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2e55f7a-3390-4646-b72f-ffc2c73c9380"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -325,6 +345,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Controls_SwapWep = m_Controls.FindAction("SwapWep", throwIfNotFound: true);
         m_Controls_SwapActive = m_Controls.FindAction("SwapActive", throwIfNotFound: true);
         m_Controls_PickUp = m_Controls.FindAction("PickUp", throwIfNotFound: true);
+        m_Controls_Pause = m_Controls.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -392,6 +413,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_SwapWep;
     private readonly InputAction m_Controls_SwapActive;
     private readonly InputAction m_Controls_PickUp;
+    private readonly InputAction m_Controls_Pause;
     public struct ControlsActions
     {
         private @PlayerControls m_Wrapper;
@@ -404,6 +426,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @SwapWep => m_Wrapper.m_Controls_SwapWep;
         public InputAction @SwapActive => m_Wrapper.m_Controls_SwapActive;
         public InputAction @PickUp => m_Wrapper.m_Controls_PickUp;
+        public InputAction @Pause => m_Wrapper.m_Controls_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -437,6 +460,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @PickUp.started -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPickUp;
                 @PickUp.performed -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPickUp;
                 @PickUp.canceled -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPickUp;
+                @Pause.started -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_ControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -465,6 +491,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @PickUp.started += instance.OnPickUp;
                 @PickUp.performed += instance.OnPickUp;
                 @PickUp.canceled += instance.OnPickUp;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -515,5 +544,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnSwapWep(InputAction.CallbackContext context);
         void OnSwapActive(InputAction.CallbackContext context);
         void OnPickUp(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

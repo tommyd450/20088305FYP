@@ -27,7 +27,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        if(Time.timeScale == 1) 
+        {
+            Movement();
+        }
+        
     }
 
     void Movement()
