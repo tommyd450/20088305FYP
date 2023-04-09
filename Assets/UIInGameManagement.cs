@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerInputs))]
 [RequireComponent(typeof(PlayerControls))]
@@ -38,16 +39,29 @@ public class UIInGameManagement : MonoBehaviour
     {
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
-        //optionsMenu.SetActive(false);
+        optionsMenu.SetActive(false);
         inGameUI.SetActive(true);
     }
+
+    public void Options() 
+    {
+        pauseMenu.SetActive(false);
+        optionsMenu.SetActive(true);
+        inGameUI.SetActive(false);
+    }
+
 
     public void Pause() 
     {
         Time.timeScale = 0;
         pauseMenu.SetActive(true);
-        //optionsMenu.SetActive(true);
+        optionsMenu.SetActive(false);
         inGameUI.SetActive(false);
+    }
+
+    public void Quit() 
+    {
+        SceneManager.LoadScene(0);
     }
 
     private void OnEnable()

@@ -22,6 +22,6 @@ public class TextChange : MonoBehaviour
 
     public void updateText() 
     {
-        updateObject.GetComponent<TextMeshProUGUI>().text = "" + slider.value + "";
+        updateObject.GetComponent<TextMeshProUGUI>().text = "" + ((int)((slider.value)*100)) + "";
     }
 }

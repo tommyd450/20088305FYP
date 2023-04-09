@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class WeaponMG : Weapon
 {
-   
+    public AudioClip sfx;
     GameObject player;
     [SerializeField] GameObject projectile;
     Coroutine auto;
@@ -40,10 +41,19 @@ public class WeaponMG : Weapon
         temp.z = 0;
         proj.transform.rotation = temp;
         proj.transform.position = move;
+        makeNoise(); 
         Destroy(proj, 5);
     }
 
-  
+
+
+    public void makeNoise() 
+    {
+        
+            
+            GetComponent<AudioSource>().PlayOneShot(sfx);
+        
+    }
 
     public IEnumerator forCouroutine()
     {

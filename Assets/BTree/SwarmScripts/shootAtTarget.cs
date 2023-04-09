@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class shootAtTarget : Node
 {
-    private float shootTimer = 3f;
+    private float shootTimer = 1.5f;
     private float _timePassed;
     private GameObject _player;
     private Transform _transform;
