@@ -8,14 +8,14 @@ public class WeaponSlots : MonoBehaviour
     Weapon slot2;
     Weapon activeWeapon;
     private PlayerControls playerControls;
-    WeaponMG mg;
+    WeaponHelix mg;
     WeaponRail rl;
     BoxCollider bx;
 
     
     void Start()
     {
-        mg = GetComponent<WeaponMG>();
+        mg = GetComponent<WeaponHelix>();
         rl = GetComponent<WeaponRail>();
         slot1 = mg;
         slot2 = rl;

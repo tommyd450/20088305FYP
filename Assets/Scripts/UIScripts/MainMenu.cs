@@ -18,13 +18,18 @@ public class MainMenu : MonoBehaviour
         
     }
 
-    public void goToOptions() 
+    public void GoToOptions() 
     {
         optionsMenu.SetActive(true);
         gameObject.SetActive(false);
     }
 
-    public void startRun() 
+    public void Exit() 
+    {
+        Application.Quit();
+    }
+
+    public void StartRun() 
     {
         SceneManager.LoadScene(1);
     }
