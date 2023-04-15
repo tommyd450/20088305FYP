@@ -13,6 +13,7 @@ public class Room : MonoBehaviour
     public List<GameObject> enemies;
     public RoomManagement roomManagement;
     public GameObject player;
+    public GameObject progression;
 
 
     public void initRoom(int size, List<CellularAutomata.Node> rm)
@@ -57,11 +58,17 @@ public class Room : MonoBehaviour
         {
             if (enemyNumber <= 0)
             {
+                if (GameObject.FindGameObjectsWithTag("Room").Length == 1)
+                {
+                    Vector3 pos = new Vector3(roomCoords[roomCoords.Length / 2].transform.position.x, 0, roomCoords[roomCoords.Length / 2].transform.position.z);
+                    Instantiate(progression, pos, Quaternion.identity);
+                }
                 foreach (GameObject p in roomCoords) 
                 {
                     Destroy(p);
                 }
                 
+
                 roomManagement.openAll();
                 Destroy(this.gameObject,5);
             }

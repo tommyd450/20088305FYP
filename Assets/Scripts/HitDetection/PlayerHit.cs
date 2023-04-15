@@ -9,7 +9,7 @@ public class PlayerHit : Hit
     void Start()
     {
         healthBar = GameObject.Find("HealthBar");
-        if (PlayerPrefs.HasKey("Health")) 
+        if (PlayerPrefs.HasKey("Health") && healthBar!= null) 
         {
             health = PlayerPrefs.GetFloat("Health");
             healthBar.GetComponent<Image>().fillAmount = health/100;

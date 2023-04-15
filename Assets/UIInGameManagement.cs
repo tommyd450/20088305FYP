@@ -61,6 +61,7 @@ public class UIInGameManagement : MonoBehaviour
 
     public void Quit() 
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3268574930656368010}
   m_Layer: 0
   m_Name: Room
-  m_TagString: Untagged
+  m_TagString: Room
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,3 +49,6 @@ MonoBehaviour:
   roomSpace: {fileID: 2350560406926450235, guid: d5d527ca5ae3c3c4cb81cd082426b688, type: 3}
   roomCoords: []
   enemies: []
+  roomManagement: {fileID: 0}
+  player: {fileID: 0}
+  progression: {fileID: 7098292478161944970, guid: a6723c33c16a1c1479ad4717439353e1, type: 3}

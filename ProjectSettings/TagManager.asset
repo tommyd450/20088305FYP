@@ -9,6 +9,7 @@ TagManager:
   - SwarmType
   - PlayerRProj
   - PlayerMProj
+  - Room
   layers:
   - Default
   - TransparentFX

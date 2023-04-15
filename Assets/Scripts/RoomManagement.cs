@@ -28,7 +28,8 @@ public class RoomManagement : MonoBehaviour
         ca = GameObject.Find("Generation").GetComponent<CellularAutomata>();
         caveEntry = ca.caveConnections;
         caveDimens = ca.actualCaves;
-        caveDimens.RemoveAt(0);
+        caveDimens.RemoveAt(0);//Removes null cave that is created at maps edge
+
         rooms = new GameObject[caveDimens.Count];
 
         Vector3 spawnPoint = new Vector3(caveDimens.ElementAt(0).ElementAt(0).x * 15, 1, caveDimens.ElementAt(0).ElementAt(0).y * 15);
