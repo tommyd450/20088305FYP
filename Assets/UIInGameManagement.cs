@@ -37,10 +37,14 @@ public class UIInGameManagement : MonoBehaviour
 
     public void Resume() 
     {
-        Time.timeScale = 1;
-        pauseMenu.SetActive(false);
-        optionsMenu.SetActive(false);
-        inGameUI.SetActive(true);
+        if(Time.timeScale == 0) 
+        {
+            Time.timeScale = 1;
+            pauseMenu.SetActive(false);
+            optionsMenu.SetActive(false);
+            inGameUI.SetActive(true);
+        }
+        
     }
 
     public void Options() 
@@ -53,10 +57,14 @@ public class UIInGameManagement : MonoBehaviour
 
     public void Pause() 
     {
-        Time.timeScale = 0;
-        pauseMenu.SetActive(true);
-        optionsMenu.SetActive(false);
-        inGameUI.SetActive(false);
+        if (Time.timeScale == 1) 
+        {
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+            optionsMenu.SetActive(false);
+            inGameUI.SetActive(false);
+        }
+        
     }
 
     public void Quit() 

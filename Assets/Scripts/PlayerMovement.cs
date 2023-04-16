@@ -13,14 +13,24 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rig;
     [SerializeField] bool stickRotation;
 
+    public GameObject mapCamera;
+    public GameObject playerCamera;
+    public GameObject locator;
+
     private void Awake()
     {
         playerControls = new PlayerControls();
+       
         //playerControls.Controls.Movement.started += ctx => Movement();
         //playerControls.Controls.Movement.started += ctx => 
     }
     void Start()
     {
+        
+        playerCamera = GameObject.Find("CinemachineStuff");
+        mapCamera = GameObject.Find("MapCam");
+        locator.SetActive(false);
+        mapCamera.SetActive(false);
         rig = gameObject.GetComponent<Rigidbody>();
     }
 
@@ -30,8 +40,9 @@ public class PlayerMovement : MonoBehaviour
         if(Time.timeScale == 1) 
         {
             Movement();
+            
         }
-        
+        swapView();
     }
 
     void Movement()
@@ -75,6 +86,37 @@ public class PlayerMovement : MonoBehaviour
     void Rotation() 
     {
         
+    }
+
+    void swapView() 
+    {
+        if (playerControls.Controls.MapScreen.WasReleasedThisFrame() && mapCamera != null)
+        {
+            
+            if (playerCamera.activeSelf && Time.timeScale ==1)
+            {
+                playerCamera.SetActive(false);
+                if (mapCamera != null)
+                {
+                    mapCamera.SetActive(true);
+                }
+                locator.SetActive(true);
+                Time.timeScale = 0;
+                //Render Big Sphere
+            }
+            else if(!playerCamera.activeSelf && Time.timeScale==0)
+            {
+                playerCamera.SetActive(true);
+                if (mapCamera != null)
+                {
+                    mapCamera.SetActive(false);
+                }
+
+                locator.SetActive(false);
+                Time.timeScale = 1;
+                // unrender Big sphere
+            }
+        }
     }
 
     private void OnEnable()

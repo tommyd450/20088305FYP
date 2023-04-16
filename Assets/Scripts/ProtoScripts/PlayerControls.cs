@@ -107,6 +107,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MapScreen"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5b67bcf-351a-4351-8d41-71e59c2cc23b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -281,8 +290,19 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Controller"",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0246fb44-e2cb-4836-9231-43dd7257fd85"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""MapScreen"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -346,6 +366,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Controls_SwapActive = m_Controls.FindAction("SwapActive", throwIfNotFound: true);
         m_Controls_PickUp = m_Controls.FindAction("PickUp", throwIfNotFound: true);
         m_Controls_Pause = m_Controls.FindAction("Pause", throwIfNotFound: true);
+        m_Controls_MapScreen = m_Controls.FindAction("MapScreen", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -414,6 +435,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Controls_SwapActive;
     private readonly InputAction m_Controls_PickUp;
     private readonly InputAction m_Controls_Pause;
+    private readonly InputAction m_Controls_MapScreen;
     public struct ControlsActions
     {
         private @PlayerControls m_Wrapper;
@@ -427,6 +449,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @SwapActive => m_Wrapper.m_Controls_SwapActive;
         public InputAction @PickUp => m_Wrapper.m_Controls_PickUp;
         public InputAction @Pause => m_Wrapper.m_Controls_Pause;
+        public InputAction @MapScreen => m_Wrapper.m_Controls_MapScreen;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -463,6 +486,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_ControlsActionsCallbackInterface.OnPause;
+                @MapScreen.started -= m_Wrapper.m_ControlsActionsCallbackInterface.OnMapScreen;
+                @MapScreen.performed -= m_Wrapper.m_ControlsActionsCallbackInterface.OnMapScreen;
+                @MapScreen.canceled -= m_Wrapper.m_ControlsActionsCallbackInterface.OnMapScreen;
             }
             m_Wrapper.m_ControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -494,6 +520,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @MapScreen.started += instance.OnMapScreen;
+                @MapScreen.performed += instance.OnMapScreen;
+                @MapScreen.canceled += instance.OnMapScreen;
             }
         }
     }
@@ -545,5 +574,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnSwapActive(InputAction.CallbackContext context);
         void OnPickUp(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnMapScreen(InputAction.CallbackContext context);
     }
 }
