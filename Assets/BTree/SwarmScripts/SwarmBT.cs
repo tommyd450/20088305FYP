@@ -12,6 +12,7 @@ public class SwarmBT : BTree.Tree
     public GameObject player;
 
     public GameObject proj;
+    
 
     [SerializeField] public GameObject[] squadron;
 
@@ -60,7 +61,7 @@ public class SwarmBT : BTree.Tree
             new Sequence(new List<Node>
             {
                 new checkTargetinRange(player,this.transform,50),
-                new shootAtTarget(player,this.transform,timePassed,proj),
+                new shootAtTarget(player,this.transform,timePassed,proj,GetComponent<AudioSource>()),
             }),
             
             

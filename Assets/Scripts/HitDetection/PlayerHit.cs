@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHit : Hit
 {
@@ -26,7 +27,8 @@ public class PlayerHit : Hit
             healthBar.GetComponent<Image>().fillAmount = health / 100;
             if (health <= 0)
             {
-
+                PlayerPrefs.DeleteKey("Health");
+                SceneManager.LoadScene(0);
                 Destroy(this.gameObject);
             }
         }

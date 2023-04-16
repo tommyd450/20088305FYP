@@ -7,6 +7,7 @@ public class EnemyHit : Hit
     public override void hit() { }
     public GameObject hitEffect;
     public GameObject hitRail;
+    public GameObject healthDrop;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Projectile>()!= null)
@@ -38,7 +39,10 @@ public class EnemyHit : Hit
             if (health < 0)
             {
                 GetComponent<SquadManagement>().PassingTheTorch();
-
+                if (Random.value < 0.05) 
+                {
+                    Instantiate(healthDrop, this.transform.position, Quaternion.identity);
+                }
                 Destroy(this.gameObject);
             }
         }
