@@ -420,6 +420,8 @@ public class CellularAutomata : MonoBehaviour
                         }
                     }
 
+                   
+
 
                     Debug.Log("Length After operation:" + e.Count + " " + e.ElementAt(1).direction);
                    
