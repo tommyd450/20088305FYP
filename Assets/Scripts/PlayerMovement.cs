@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject mapCamera;
     public GameObject playerCamera;
     public GameObject locator;
+    public GameObject weaponManager;
 
     private void Awake()
     {
@@ -32,6 +33,11 @@ public class PlayerMovement : MonoBehaviour
         locator.SetActive(false);
         mapCamera.SetActive(false);
         rig = gameObject.GetComponent<Rigidbody>();
+        if (GameObject.Find("WeaponManager") == null) 
+        {
+            GameObject wep = Instantiate(weaponManager);
+            wep.name = "WeaponManager";
+        }
     }
 
     // Update is called once per frame

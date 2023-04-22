@@ -64,7 +64,7 @@ public class CellularAutomata : MonoBehaviour
         nm.UpdateNavMesh(nm.navMeshData);
         
         Debug.Log("Cave Connections Pairings " + caveConnections.Count);
-        
+       GameObject.Find("RoomManagemnt").gameObject.GetComponent<RoomManagement>().begin();
     }
 
     public void InitialGen()

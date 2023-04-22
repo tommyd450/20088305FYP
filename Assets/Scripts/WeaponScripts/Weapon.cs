@@ -13,4 +13,6 @@ public abstract class Weapon : MonoBehaviour
     public abstract void attackReleased();
 
     public abstract void stopCouroutine();
+
+    public abstract string returnName();
 }

@@ -9,10 +9,12 @@ public class Progression : MonoBehaviour
 
     BoxCollider bx;
     float health;
+    GameObject weaponManager;
     
     // Start is called before the first frame update
     void Start()
     {
+        weaponManager = GameObject.Find("WeaponManager");
         bx = GetComponent<BoxCollider>();
     }
 
@@ -29,6 +31,7 @@ public class Progression : MonoBehaviour
 
             health = other.gameObject.GetComponent<Hit>().health;
             PlayerPrefs.SetFloat("Health", health);
+            DontDestroyOnLoad(weaponManager);
             SceneManager.LoadScene(1);
         }
     }

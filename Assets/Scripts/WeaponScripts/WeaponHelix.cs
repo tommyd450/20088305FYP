@@ -12,6 +12,8 @@ public class WeaponHelix : Weapon
     GameObject proj1;
     GameObject proj2;
     Coroutine auto;
+
+    string name = "Helix Cannon";
     void Start()
     {
         player = GameObject.Find("Player");
@@ -68,5 +70,10 @@ public class WeaponHelix : Weapon
     public override void stopCouroutine()
     {
         StopAllCoroutines();
+    }
+
+    public override string returnName()
+    {
+        return name;
     }
 }

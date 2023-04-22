@@ -14,6 +14,8 @@ public class Room : MonoBehaviour
     public RoomManagement roomManagement;
     public GameObject player;
     public GameObject progression;
+    public GameObject shop;
+    bool shopSpawned = false;
 
 
     public void initRoom(int size, List<CellularAutomata.Node> rm)
@@ -62,6 +64,12 @@ public class Room : MonoBehaviour
                 {
                     Vector3 pos = new Vector3(roomCoords[roomCoords.Length / 2].transform.position.x, 0, roomCoords[roomCoords.Length / 2].transform.position.z);
                     Instantiate(progression, pos, Quaternion.identity);
+                }
+                if (GameObject.FindGameObjectsWithTag("Room").Length == Mathf.Round((float)(roomManagement.caveDimens.Count) / 2) && shopSpawned == false) 
+                {
+                    shopSpawned = true;
+                    Vector3 pos = new Vector3(roomCoords[roomCoords.Length / 2].transform.position.x, 0, roomCoords[roomCoords.Length / 2].transform.position.z);
+                    Instantiate(shop, pos, Quaternion.identity);
                 }
                 foreach (GameObject p in roomCoords) 
                 {

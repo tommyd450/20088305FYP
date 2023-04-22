@@ -12,6 +12,7 @@ public class UIInGameManagement : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject inGameUI;
     public GameObject optionsMenu;
+    public GameObject shop;
 
     // Start is called before the first frame update
 
@@ -67,9 +68,20 @@ public class UIInGameManagement : MonoBehaviour
         
     }
 
+    public void openShop() 
+    {
+        if (Time.timeScale == 1) 
+        {
+            Time.timeScale = 0;
+            shop.SetActive(true);
+        }
+        
+    }
+
     public void Quit() 
     {
         Time.timeScale = 1;
+        Destroy(GameObject.Find("WeaponManager"));
         SceneManager.LoadScene(0);
     }
 

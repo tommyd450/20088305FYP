@@ -17,6 +17,9 @@ public class WeaponRail : Weapon
     float cooldownStart;
     bool chargeComplete = false;
     RailProj rail;
+
+    string name = "Rail Gun";
+
     void Start()
     {
         player = GameObject.Find("Player");
@@ -93,7 +96,10 @@ public class WeaponRail : Weapon
     {
         StopAllCoroutines();
     }
-
+    public override string returnName()
+    {
+        return name;
+    }
 
 
 }

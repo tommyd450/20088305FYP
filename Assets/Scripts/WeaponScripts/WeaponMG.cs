@@ -9,13 +9,20 @@ public class WeaponMG : Weapon
     GameObject player;
     [SerializeField] GameObject projectile;
     Coroutine auto;
+    string name = "Auto Cannon";
     // Experimenting with inheritence not seeing the advantage rght now other than code hygiene.
     void Start()
     {
         player = GameObject.Find("Player");
     }
-   
-    
+
+    private void Update()
+    {
+        if (player == null) 
+        {
+            player = GameObject.Find("Player");
+        }
+    }
 
     public override void attackInitiated()
     {
@@ -70,6 +77,9 @@ public class WeaponMG : Weapon
     }
 
 
-
+    public override string returnName()
+    {
+        return name;
+    }
 
 }

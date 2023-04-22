@@ -22,7 +22,7 @@ public class RoomManagement : MonoBehaviour
 
 
     public List<GameObject> doors;
-    void Start()
+    public void begin()
     {
         
         ca = GameObject.Find("Generation").GetComponent<CellularAutomata>();
@@ -54,56 +54,10 @@ public class RoomManagement : MonoBehaviour
            
             doors.Add(g);
 
-            if (x.ElementAt(1).direction == CellularAutomata.DIR.NORTH)
-            {
-                //g.transform.position = point;
-                g.transform.Rotate(-90, 0, 0);
-            }
-            else if (x.ElementAt(1).direction == CellularAutomata.DIR.SOUTH) 
-            {
-                //g.transform.position = point;
-                g.transform.Rotate(-90, 180, 0);
-            }
-            else if (x.ElementAt(1).direction == CellularAutomata.DIR.EAST)
-            {
-                //g.transform.position = point;
-                g.transform.Rotate(-90, 90, 0);
-
-            }
-            else if (x.ElementAt(1).direction == CellularAutomata.DIR.WEST)
-            {
-                //g.transform.position = point;
-                g.transform.Rotate(-90, 359, 0);
-
-            }
+            
             Vector3 entry = new Vector3(x.ElementAt(0).x * 15, 0, x.ElementAt(0).y * 15);
             GameObject e = Instantiate(blocker, entry, Quaternion.identity);
-           
             doors.Add(e);
-            if (x.ElementAt(0).direction == CellularAutomata.DIR.NORTH)
-            {
-                //g.transform.position = point;
-                e.transform.Rotate(-90,0, 0);
-            }
-            else if (x.ElementAt(0).direction == CellularAutomata.DIR.SOUTH)
-            {
-                //g.transform.position = point;
-                e.transform.Rotate(-90, 180, 0);
-            }
-            else if (x.ElementAt(0).direction == CellularAutomata.DIR.EAST)
-            {
-                //g.transform.position = point;
-                e.transform.Rotate(-90, 90, 0);
-
-            }
-            else if (x.ElementAt(0).direction == CellularAutomata.DIR.WEST)
-            {
-                //g.transform.position = point;
-                e.transform.Rotate(-90, 359, 0);
-
-            }
-
-
 
         }
         ca.nm.UpdateNavMesh(ca.nm.navMeshData);

@@ -52,3 +52,4 @@ MonoBehaviour:
   roomManagement: {fileID: 0}
   player: {fileID: 0}
   progression: {fileID: 7098292478161944970, guid: a6723c33c16a1c1479ad4717439353e1, type: 3}
+  shop: {fileID: 6562504563716393565, guid: 3646280b3f6d99f47a94948f7746fe2f, type: 3}

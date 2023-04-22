@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class WeaponSlots : MonoBehaviour
 {
-    Weapon slot1;
-    Weapon slot2;
-    Weapon activeWeapon;
+    public Weapon slot1;
+    public Weapon slot2;
+    public Weapon activeWeapon;
+    public GameObject weaponUi;
     private PlayerControls playerControls;
     WeaponMG mg;
     WeaponRail rl;
@@ -21,6 +24,8 @@ public class WeaponSlots : MonoBehaviour
         slot2 = rl;
         activeWeapon = slot1;
         bx = GetComponent<BoxCollider>();
+        weaponUi = GameObject.Find("UIManagement").transform.Find("UI").gameObject.transform.Find("EquippedWeapon").gameObject;
+        weaponUi.GetComponent<TextMeshProUGUI>().text = activeWeapon.returnName();
     }
 
     private void Awake()
@@ -46,7 +51,7 @@ public class WeaponSlots : MonoBehaviour
         print(activeWeapon.GetType());
     }
 
-    void end() 
+    public void end() 
     {
         activeWeapon.attackReleased();
     }
@@ -56,11 +61,14 @@ public class WeaponSlots : MonoBehaviour
         activeWeapon.stopCouroutine();
         if (activeWeapon == slot1)
         {
+            
             activeWeapon = slot2;
+            weaponUi.GetComponent<TextMeshProUGUI>().text = "Slot2 = "+activeWeapon.returnName();
         }
         else if (activeWeapon == slot2) 
         {
             activeWeapon = slot1;
+            weaponUi.GetComponent<TextMeshProUGUI>().text = "Slot 1 = "+activeWeapon.returnName();
         }
 
     }
