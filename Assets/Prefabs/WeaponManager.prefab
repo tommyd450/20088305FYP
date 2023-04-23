@@ -83,6 +83,7 @@ MonoBehaviour:
   chargeDispersal: {fileID: 845580893638812069, guid: 194bb7da24051b64ca814a6990cf515e, type: 3}
   tempPart: {fileID: 0}
   player: {fileID: 0}
+  sfx: {fileID: 8300000, guid: 0e15b0519092bc048a0638771354e5a2, type: 3}
 --- !u!82 &913024745185527772
 AudioSource:
   m_ObjectHideFlags: 0
@@ -194,3 +195,4 @@ MonoBehaviour:
   projectile1: {fileID: 2987257089912764341, guid: 41189565aa37f8944861b4fe24c7935c, type: 3}
   projectile2: {fileID: 7804640459378482809, guid: b08dcac566b549440b9849a3fec26795, type: 3}
   Weapon: {fileID: 0}
+  sfx: {fileID: 8300000, guid: 0e15b0519092bc048a0638771354e5a2, type: 3}

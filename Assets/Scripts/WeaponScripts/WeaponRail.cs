@@ -17,6 +17,7 @@ public class WeaponRail : Weapon
     float cooldownStart;
     bool chargeComplete = false;
     RailProj rail;
+    public AudioClip sfx;
 
     string name = "Rail Gun";
 
@@ -45,6 +46,7 @@ public class WeaponRail : Weapon
     {
         if (Time.time - cooldownStart > 3 && chargeComplete == false) // Ensures that the Cooldown of 3 seconds has been met.
         {
+            GetComponent<AudioSource>().PlayOneShot(sfx);
             chargeComplete = true;
             timeSince = Time.time - startTime; // Calculates Time since the charge was started 
             //print("Time Passed : "+timeSince);
@@ -74,6 +76,7 @@ public class WeaponRail : Weapon
             proj.transform.rotation = temp;
             proj.transform.position = move;
             proj.GetComponent<RailProj>().chargeMult = timeSince;
+            
             Destroy(proj, 5);
 
         }

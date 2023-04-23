@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class WeaponSlots : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class WeaponSlots : MonoBehaviour
     
     void Start()
     {
+
+        
         mg = GetComponent<WeaponMG>();
         rl = GetComponent<WeaponRail>();
         slot1 = mg;
@@ -28,15 +31,14 @@ public class WeaponSlots : MonoBehaviour
         weaponUi.GetComponent<TextMeshProUGUI>().text = activeWeapon.returnName();
     }
 
+   
+    
     private void Awake()
     {
-        print("Everytime");
-        playerControls = new PlayerControls();
-        playerControls.Controls.SwapWep.started += _ => swap();
-        playerControls.Controls.SwapWep.canceled += _ => stopped();
-        playerControls.Controls.Shoot.started += _ => start();  
-        playerControls.Controls.Shoot.canceled += _ => end();
-        playerControls.Controls.PickUp.started += _ => PickUpWeapon();
+        
+        
+            
+            print("weaponslottest");
         
     }
 
@@ -47,6 +49,7 @@ public class WeaponSlots : MonoBehaviour
 
     void start() 
     {
+
         activeWeapon.attackInitiated();
         print(activeWeapon.GetType());
     }
@@ -98,14 +101,27 @@ public class WeaponSlots : MonoBehaviour
 
     private void OnEnable()
     {
-        playerControls.Enable();
 
+        playerControls = new PlayerControls();
+        playerControls.Controls.SwapWep.started += _ => swap();
+        playerControls.Controls.SwapWep.canceled += _ => stopped();
+        playerControls.Controls.Shoot.started += _ => start();
+        playerControls.Controls.Shoot.canceled += _ => end();
+        playerControls.Controls.PickUp.started += _ => PickUpWeapon();
+        playerControls.Enable();
     }
+
+    
 
     private void OnDisable()
     {
-        //playerControls.Controls.Shoot.performed -= ctx => shoot();
-        playerControls.Disable();
+        playerControls.Dispose();
+        playerControls.Controls.SwapWep.started -= _ => swap();
+        playerControls.Controls.SwapWep.canceled -= _ => stopped();
+        playerControls.Controls.Shoot.started -= _ => start();
+        playerControls.Controls.Shoot.canceled -= _ => end();
+        playerControls.Controls.PickUp.started -= _ => PickUpWeapon();
+        
     }
 
 

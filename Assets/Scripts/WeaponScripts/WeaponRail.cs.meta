@@ -5,11 +5,11 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - projectile: {fileID: 289867689156449768, guid: 029f854ee1929da45a31c3fc76324b0f, type: 3}
-  - Weapon: {instanceID: 0}
   - chargeParticle: {fileID: 6119723395330773443, guid: a28d53c674fa4b14bb8061a2b41eacec, type: 3}
   - chargeDispersal: {fileID: 845580893638812069, guid: 194bb7da24051b64ca814a6990cf515e, type: 3}
   - tempPart: {instanceID: 0}
   - player: {instanceID: 0}
+  - sfx: {fileID: 8300000, guid: 0e15b0519092bc048a0638771354e5a2, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

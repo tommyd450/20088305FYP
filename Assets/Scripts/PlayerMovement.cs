@@ -20,10 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        playerControls = new PlayerControls();
+        
        
-        //playerControls.Controls.Movement.started += ctx => Movement();
-        //playerControls.Controls.Movement.started += ctx => 
     }
     void Start()
     {
@@ -127,6 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        playerControls = new PlayerControls();
         playerControls.Enable();
     }
 

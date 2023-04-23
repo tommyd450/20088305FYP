@@ -12,6 +12,7 @@ public class WeaponHelix : Weapon
     GameObject proj1;
     GameObject proj2;
     Coroutine auto;
+    public AudioClip sfx;
 
     string name = "Helix Cannon";
     void Start()
@@ -42,6 +43,7 @@ public class WeaponHelix : Weapon
         proj1.transform.position = move;
         proj2.transform.rotation = temp;
         proj2.transform.position = move;
+        GetComponent<AudioSource>().PlayOneShot(sfx);
         Destroy(proj1, 5);
         Destroy(proj2, 5);
     }
