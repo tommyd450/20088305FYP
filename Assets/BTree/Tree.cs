@@ -4,7 +4,9 @@ using UnityEngine;
 
 
 namespace BTree
-{
+{   //These scripts created originally created by Mina-Pecheux as referenced in report.
+    //These scripts for the Behaviour tree were not created by me but were utilised for this project.
+    //The behaviours and custom swarm tree in the swarm scripts folder were created by me.
     public abstract class Tree : MonoBehaviour
     {
         // Start is called before the first frame update

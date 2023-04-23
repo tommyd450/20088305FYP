@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract  class Action : MonoBehaviour
+public abstract class Action : MonoBehaviour
 {
+    /*
+     * These Scripts were created following a course I did on Goal Oriented Action Planning,
+     * The Course was created by Penny de Byl by following a course created by her at this site https://learn.holistic3d.com/course/goap/
+     * These scripts are not used within the project as the project shifted away from Goal Oriented Action Planning
+     * 
+     */
+
     public string actionName = "Action";
     public float cost = 1.0f;
     public GameObject target;

@@ -9,6 +9,9 @@ namespace BTree
 {
     public class Sequence : Node
     {
+        //These scripts created originally created by Mina-Pecheux as referenced in report.
+        //These scripts for the Behaviour tree were not created by me but were utilised for this project.
+        //The behaviours and custom swarm tree in the swarm scripts folder were created by me.
         public Sequence() : base() { }
         public Sequence(List<Node> children) : base(children) { }
 
