@@ -42,7 +42,9 @@ public class EnemyHit : Hit
                 if (Random.value < 0.05) 
                 {
                     Instantiate(healthDrop, this.transform.position, Quaternion.identity);
+                    
                 }
+                PlayerPrefs.SetFloat("Currency", PlayerPrefs.GetFloat("Currency") + 5);
                 Destroy(this.gameObject);
             }
         }

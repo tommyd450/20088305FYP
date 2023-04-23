@@ -20,6 +20,26 @@ public class StartUpPrefs : MonoBehaviour
            
             music.audioMixer.SetFloat("Music Volume", Mathf.Log10(PlayerPrefs.GetFloat("Music Volume")) * 20);
         }
+        if (PlayerPrefs.HasKey("TotalEnemiesKilled")) 
+        {
+            PlayerPrefs.SetFloat("TotalEnemiesKilled", 0);
+        }
+        if (PlayerPrefs.HasKey("TotalRoomsCleared"))
+        {
+            PlayerPrefs.SetFloat("TotalEnemiesKilled", 0);
+        }
+        if (PlayerPrefs.HasKey("Currency")) 
+        {
+            PlayerPrefs.SetFloat("Currency", 0);
+        }
+        if (PlayerPrefs.HasKey("HealthCost"))
+        {
+            PlayerPrefs.SetFloat("HealthCost", 100);
+        } else if (!PlayerPrefs.HasKey("HealthCost")) 
+        {
+            PlayerPrefs.SetFloat("HealthCost", 100);
+        }
+        
     }
 
     // Update is called once per frame

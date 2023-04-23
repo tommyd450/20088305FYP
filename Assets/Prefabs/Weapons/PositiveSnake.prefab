@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2987257089912764363}
   m_Layer: 0
   m_Name: PositiveSnake
-  m_TagString: PlayerProj
+  m_TagString: PlayerMProj
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

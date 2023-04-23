@@ -13,7 +13,8 @@ public class ShopPanel : MonoBehaviour
     WeaponRail rg;
     WeaponHelix hx;
     System.Type forSale;
-    GameObject saleText;
+    public GameObject saleText;
+    public GameObject healthText;
     GameObject toggle;
     public GameObject wholeShop;
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class ShopPanel : MonoBehaviour
         saleText = GameObject.Find("WeaponListing");
         toggle = GameObject.Find("SlotToggle");
         SetWeaponForSale();
+        SetHealthText();
     }
 
     // Update is called once per frame
@@ -40,44 +42,68 @@ public class ShopPanel : MonoBehaviour
         saleText.GetComponent<TextMeshProUGUI>().text = forSale.ToString()+ " for 300";
     }
 
+    void SetHealthText() 
+    {
+        healthText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetFloat("HealthCost") + " to Repair.";
+    }
 
 
     public void purchaseWeapon() 
     {
-
-        GameObject wepSlots = GameObject.Find("WeaponManager");
-
-
-        if (toggle.GetComponent<Toggle>().isOn)
+        if (PlayerPrefs.GetFloat("Currency")-300 >=0)
         {
+            PlayerPrefs.SetFloat("Currency",PlayerPrefs.GetFloat("Currency"));
+
+            GameObject wepSlots = GameObject.Find("WeaponManager");
 
 
-
-            if (wepSlots.GetComponent<WeaponSlots>().activeWeapon == wepSlots.GetComponent<WeaponSlots>().slot1)
+            if (toggle.GetComponent<Toggle>().isOn)
             {
-                wepSlots.GetComponent<WeaponSlots>().end();
-                wepSlots.GetComponent<WeaponSlots>().slot2 = wepSlots.GetComponent(forSale) as Weapon;
+
+
+
+                if (wepSlots.GetComponent<WeaponSlots>().activeWeapon == wepSlots.GetComponent<WeaponSlots>().slot1)
+                {
+                    wepSlots.GetComponent<WeaponSlots>().end();
+                    wepSlots.GetComponent<WeaponSlots>().slot2 = wepSlots.GetComponent(forSale) as Weapon;
+                }
+
+
+                wepSlots.GetComponent<WeaponSlots>().activeWeapon = wepSlots.GetComponent(forSale) as Weapon;
+            }
+            else
+            {
+                if (wepSlots.GetComponent<WeaponSlots>().activeWeapon == wepSlots.GetComponent<WeaponSlots>().slot2)
+                {
+                    wepSlots.GetComponent<WeaponSlots>().end();
+                    wepSlots.GetComponent<WeaponSlots>().slot1 = wepSlots.GetComponent(forSale) as Weapon;
+                }
+                wepSlots.GetComponent<WeaponSlots>().activeWeapon = wepSlots.GetComponent(forSale) as Weapon;
             }
 
-
-            wepSlots.GetComponent<WeaponSlots>().activeWeapon = wepSlots.GetComponent(forSale) as Weapon;
         }
-        else 
-        {
-            if (wepSlots.GetComponent<WeaponSlots>().activeWeapon == wepSlots.GetComponent<WeaponSlots>().slot2)
-            {
-                wepSlots.GetComponent<WeaponSlots>().end();
-                wepSlots.GetComponent<WeaponSlots>().slot1 = wepSlots.GetComponent(forSale) as Weapon;
-            }
-            wepSlots.GetComponent<WeaponSlots>().activeWeapon = wepSlots.GetComponent(forSale) as Weapon;
-        }
-       
-        
     }
 
     public void purchaseHealth()
     {
-
+        print("Current Money= " + PlayerPrefs.GetFloat("Currency") + " also cost is" + PlayerPrefs.GetFloat("HealthCost"));
+        float check1 = PlayerPrefs.GetFloat("Currency");
+        float check2 = PlayerPrefs.GetFloat("HealthCost");
+        if ((check1 - check2) >= 0) 
+        {
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHit>().health+10  <= 100) 
+            {
+                print("healthbought");
+                PlayerPrefs.SetFloat("Currency",PlayerPrefs.GetFloat("Currency") - PlayerPrefs.GetFloat("HealthCost")) ;
+                GameObject p = GameObject.Find("Player");
+                p.GetComponent<PlayerHit>().health += 10;
+                p.GetComponent<PlayerHit>().healthBar.GetComponent<Image>().fillAmount = p.GetComponent<Hit>().health / 100;
+                PlayerPrefs.SetFloat("HealthCost", PlayerPrefs.GetFloat("HealthCost") + 50);
+                SetHealthText();
+            }
+            
+        
+        }
     }
 
     public void closePanel() 
