@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjSnake : MonoBehaviour
+public class ProjSnake : Projectile
 {
     // Start is called before the first frame update
     [SerializeField] GameObject proj;
@@ -11,11 +11,16 @@ public class ProjSnake : MonoBehaviour
     [SerializeField] GameObject plr;
     [SerializeField] float freq;
     [SerializeField] float width;
+
+    private string projectileType = "";
+    private float damageValue = 0;
     float startTime;
     Vector3 pos;
     Vector3 axis;
     void Start()
     {
+        SetProjectileType("MachineGun");
+        SetDamage(20);
         plr = GameObject.Find("Player");
         rig = gameObject.GetComponent<Rigidbody>();
         sph = gameObject.GetComponent<SphereCollider>();
@@ -35,5 +40,25 @@ public class ProjSnake : MonoBehaviour
         
         pos += transform.forward * Time.deltaTime * 75.0f;
         gameObject.transform.position = (pos + axis * Mathf.Sin((Time.time-startTime)*freq) * width);
+    }
+
+    public override float GetDamageValue()
+    {
+        return damageValue;
+    }
+
+    public override void SetDamage(float dmg)
+    {
+        damageValue = dmg;
+    }
+
+    public override void SetProjectileType(string type)
+    {
+        projectileType = type;
+    }
+
+    public override string GetProjectileType()
+    {
+        return projectileType;
     }
 }

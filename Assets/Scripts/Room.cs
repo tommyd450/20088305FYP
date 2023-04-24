@@ -49,8 +49,8 @@ public class Room : MonoBehaviour
             spawned = true;
             for (int i = 0; i < enemyAmount; i++)
             {
-                
-                Vector3 pos = new Vector3(roomCoords[roomCoords.Length / 2].transform.position.x, 0, roomCoords[roomCoords.Length / 2].transform.position.z);
+                int pointSelect = Random.Range(0, roomCoords.Length - 1);
+                Vector3 pos = new Vector3(roomCoords[pointSelect].transform.position.x, 0, roomCoords[pointSelect].transform.position.z);
                 enemies.Add(Instantiate(enemy, pos, Quaternion.identity));
                 enemies.ElementAt(i).GetComponent<SwarmBT>().player = GameObject.Find("Player");
             }

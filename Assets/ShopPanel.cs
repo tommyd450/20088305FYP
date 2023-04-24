@@ -62,25 +62,25 @@ public class ShopPanel : MonoBehaviour
 
 
 
-                if (wepSlots.GetComponent<WeaponSlots>().activeWeapon == wepSlots.GetComponent<WeaponSlots>().slot1)
-                {
-                    wepSlots.GetComponent<WeaponSlots>().end();
-                    wepSlots.GetComponent<WeaponSlots>().slot2 = wepSlots.GetComponent(forSale) as Weapon;
-                }
-
-
-                wepSlots.GetComponent<WeaponSlots>().activeWeapon = wepSlots.GetComponent(forSale) as Weapon;
-            }
-            else
-            {
                 if (wepSlots.GetComponent<WeaponSlots>().activeWeapon == wepSlots.GetComponent<WeaponSlots>().slot2)
                 {
                     wepSlots.GetComponent<WeaponSlots>().end();
-                    wepSlots.GetComponent<WeaponSlots>().slot1 = wepSlots.GetComponent(forSale) as Weapon;
-                }
-                wepSlots.GetComponent<WeaponSlots>().activeWeapon = wepSlots.GetComponent(forSale) as Weapon;
-            }
 
+                    wepSlots.GetComponent<WeaponSlots>().activeWeapon = wepSlots.GetComponent(forSale) as Weapon;
+                }
+                wepSlots.GetComponent<WeaponSlots>().slot2 = wepSlots.GetComponent(forSale) as Weapon;
+            }
+            else 
+            {
+                if (wepSlots.GetComponent<WeaponSlots>().activeWeapon == wepSlots.GetComponent<WeaponSlots>().slot1)
+                {
+                    wepSlots.GetComponent<WeaponSlots>().end();
+
+                    wepSlots.GetComponent<WeaponSlots>().activeWeapon = wepSlots.GetComponent(forSale) as Weapon;
+                }
+                wepSlots.GetComponent<WeaponSlots>().slot1 = wepSlots.GetComponent(forSale) as Weapon;
+            }
+           
         }
     }
 

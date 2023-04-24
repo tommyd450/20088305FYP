@@ -25,7 +25,10 @@ public class WeaponHelix : Weapon
 
     void Update()
     {
-        player = GameObject.Find("Player");
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
     }
 
     public void shoot()

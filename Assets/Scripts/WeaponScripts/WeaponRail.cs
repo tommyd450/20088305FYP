@@ -27,7 +27,21 @@ public class WeaponRail : Weapon
         playerBod = player.GetComponent<Rigidbody>();
         rail = new RailProj();
     }
+
+    void Awake() 
+    {
+        player = GameObject.Find("Player");
+    }
     // Experimenting with inheritence not seeing the advantage rght now other than code hygiene.
+
+    public void Update()
+    {
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+            playerBod = player.GetComponent<Rigidbody>();
+        }
+    }
 
     void charge()
     {

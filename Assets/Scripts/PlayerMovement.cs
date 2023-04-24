@@ -17,11 +17,18 @@ public class PlayerMovement : MonoBehaviour
     public GameObject playerCamera;
     public GameObject locator;
     public GameObject weaponManager;
+    GameObject wep;
+    WeaponSlots slots;
 
     private void Awake()
     {
-        
-       
+        if (GameObject.Find("WeaponManager") == null)
+        {
+            wep = Instantiate(weaponManager);
+            wep.name = "WeaponManager";
+            print("Enabled");
+        }
+
     }
     void Start()
     {
@@ -31,11 +38,29 @@ public class PlayerMovement : MonoBehaviour
         locator.SetActive(false);
         mapCamera.SetActive(false);
         rig = gameObject.GetComponent<Rigidbody>();
-        if (GameObject.Find("WeaponManager") == null) 
+        
+        playerControls = new PlayerControls();
+
+        if (GameObject.Find("WeaponManager") == null)
         {
-            GameObject wep = Instantiate(weaponManager);
+            wep = Instantiate(weaponManager);
             wep.name = "WeaponManager";
+            print("Found this object");
         }
+        else 
+        {
+            wep = GameObject.Find("WeaponManager");
+            //wep.GetComponent<WeaponRail>().pla
+        }
+        
+        slots = wep.GetComponent<WeaponSlots>();
+        
+        playerControls.Controls.SwapWep.started += _ => slots.swap();
+        playerControls.Controls.SwapWep.canceled += _ => slots.stopped();
+        playerControls.Controls.Shoot.started += _ => slots.start();
+        playerControls.Controls.Shoot.canceled += _ => slots.end();
+        playerControls.Controls.PickUp.started += _ => slots.PickUpWeapon();
+        playerControls.Enable();
     }
 
     // Update is called once per frame
@@ -125,12 +150,39 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        playerControls = new PlayerControls();
-        playerControls.Enable();
+        if (GameObject.Find("WeaponManager") == null)
+        {
+            wep = Instantiate(weaponManager);
+            wep.name = "WeaponManager";
+            print("Found this object");
+        }
+        else
+        {
+            wep = GameObject.Find("WeaponManager");
+        }
+        slots = wep.GetComponent<WeaponSlots>();
+        slots.setUi();
+
+    }
+
+    private void OnDestroy()
+    {
+        playerControls.Controls.SwapWep.started -= _ => slots.swap();
+        playerControls.Controls.SwapWep.canceled -= _ => slots.stopped();
+        playerControls.Controls.Shoot.started -= _ => slots.start();
+        playerControls.Controls.Shoot.canceled -= _ => slots.end();
+        playerControls.Controls.PickUp.started -= _ => slots.PickUpWeapon();
+        playerControls.Dispose();
     }
 
     private void OnDisable()
     {
+        playerControls.Controls.SwapWep.started -= _ => slots.swap();
+        playerControls.Controls.SwapWep.canceled -= _ => slots.stopped();
+        playerControls.Controls.Shoot.started -= _ => slots.start();
+        playerControls.Controls.Shoot.canceled -= _ => slots.end();
+        playerControls.Controls.PickUp.started -= _ => slots.PickUpWeapon();
+        
         playerControls.Disable();
     }
 }

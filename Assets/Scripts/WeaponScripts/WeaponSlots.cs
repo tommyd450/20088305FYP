@@ -27,8 +27,7 @@ public class WeaponSlots : MonoBehaviour
         slot2 = rl;
         activeWeapon = slot1;
         bx = GetComponent<BoxCollider>();
-        weaponUi = GameObject.Find("UIManagement").transform.Find("UI").gameObject.transform.Find("EquippedWeapon").gameObject;
-        weaponUi.GetComponent<TextMeshProUGUI>().text = activeWeapon.returnName();
+        
     }
 
    
@@ -47,7 +46,13 @@ public class WeaponSlots : MonoBehaviour
         
     }
 
-    void start() 
+    public void setUi() 
+    {
+        weaponUi = GameObject.Find("UIManagement").transform.Find("UI").gameObject.transform.Find("EquippedWeapon").gameObject;
+        weaponUi.GetComponent<TextMeshProUGUI>().text = activeWeapon.returnName();
+    }
+
+    public void start() 
     {
 
         activeWeapon.attackInitiated();
@@ -99,30 +104,7 @@ public class WeaponSlots : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-
-        playerControls = new PlayerControls();
-        playerControls.Controls.SwapWep.started += _ => swap();
-        playerControls.Controls.SwapWep.canceled += _ => stopped();
-        playerControls.Controls.Shoot.started += _ => start();
-        playerControls.Controls.Shoot.canceled += _ => end();
-        playerControls.Controls.PickUp.started += _ => PickUpWeapon();
-        playerControls.Enable();
-    }
-
     
-
-    private void OnDisable()
-    {
-        playerControls.Dispose();
-        playerControls.Controls.SwapWep.started -= _ => swap();
-        playerControls.Controls.SwapWep.canceled -= _ => stopped();
-        playerControls.Controls.Shoot.started -= _ => start();
-        playerControls.Controls.Shoot.canceled -= _ => end();
-        playerControls.Controls.PickUp.started -= _ => PickUpWeapon();
-        
-    }
 
 
 }
