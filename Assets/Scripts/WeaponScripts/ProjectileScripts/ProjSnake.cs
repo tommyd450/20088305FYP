@@ -20,7 +20,7 @@ public class ProjSnake : Projectile
     void Start()
     {
         SetProjectileType("MachineGun");
-        SetDamage(20);
+        SetDamage(2);
         plr = GameObject.Find("Player");
         rig = gameObject.GetComponent<Rigidbody>();
         sph = gameObject.GetComponent<SphereCollider>();

@@ -39,7 +39,11 @@ public class StartUpPrefs : MonoBehaviour
         {
             PlayerPrefs.SetFloat("HealthCost", 100);
         }
-        
+        if (PlayerPrefs.HasKey("Health"))
+        {
+            PlayerPrefs.SetFloat("Health", 100);
+        }
+
     }
 
     // Update is called once per frame

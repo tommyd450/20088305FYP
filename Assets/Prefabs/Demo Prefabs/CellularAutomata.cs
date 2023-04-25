@@ -406,8 +406,13 @@ public class CellularAutomata : MonoBehaviour
                         if (p.Count > 4)
                         {
                             e.RemoveAt(1);
-                            e.Insert(1, p.ElementAt(p.Count-3));
+                            e.Insert(1, p.ElementAt(p.Count - 3));
                         }
+                        else 
+                        {
+                            e.RemoveAt(1);
+                        }
+                        
                     }
 
                     if (u.x == e.ElementAt(0).x && u.y == e.ElementAt(0).y) 
@@ -416,7 +421,11 @@ public class CellularAutomata : MonoBehaviour
                         if (p.Count > 4)
                         {
                             e.RemoveAt(0);
-                            e.Insert(0, p.ElementAt(4));
+                            e.Insert(0, p.ElementAt(3));
+                        }
+                        else 
+                        {
+                            e.RemoveAt(0);
                         }
                     }
 

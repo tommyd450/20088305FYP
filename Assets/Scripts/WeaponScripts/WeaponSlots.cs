@@ -14,6 +14,7 @@ public class WeaponSlots : MonoBehaviour
     private PlayerControls playerControls;
     WeaponMG mg;
     WeaponRail rl;
+    WeaponHelix hx;
     BoxCollider bx;
 
     
@@ -23,10 +24,16 @@ public class WeaponSlots : MonoBehaviour
         
         mg = GetComponent<WeaponMG>();
         rl = GetComponent<WeaponRail>();
+        hx = GetComponent<WeaponHelix>();
         slot1 = mg;
         slot2 = rl;
         activeWeapon = slot1;
         bx = GetComponent<BoxCollider>();
+        weaponUi = GameObject.Find("UIManagement").transform.Find("UI").gameObject.transform.Find("EquippedWeapon").gameObject;
+        if (weaponUi != null) 
+        {
+            weaponUi.GetComponent<TextMeshProUGUI>().text = activeWeapon.returnName();
+        }
         
     }
 
@@ -37,7 +44,7 @@ public class WeaponSlots : MonoBehaviour
         
         
             
-            print("weaponslottest");
+            
         
     }
 
@@ -49,7 +56,10 @@ public class WeaponSlots : MonoBehaviour
     public void setUi() 
     {
         weaponUi = GameObject.Find("UIManagement").transform.Find("UI").gameObject.transform.Find("EquippedWeapon").gameObject;
-        weaponUi.GetComponent<TextMeshProUGUI>().text = activeWeapon.returnName();
+        if (weaponUi != null)
+        {
+            weaponUi.GetComponent<TextMeshProUGUI>().text = activeWeapon.returnName();
+        }
     }
 
     public void start() 
